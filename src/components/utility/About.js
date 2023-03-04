@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-10 pb-10'>
         <div className='flex flex-row jusify-center items-center pb-5'>
-            <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Hi there! Great to see you.</h1>
+            <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Hi there!</h1>
 
         </div>
         <div className='border rounded-md px-5 py-5 bg-green-100'>
@@ -53,7 +53,7 @@ export default function About() {
         </div>
         <div className='border rounded-md bg-white px-5 py-5'>
             <h1 className='font-semibold'>
-                <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Credits:</span> All features of <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-amber-700'>Good Scribe</span> are
+                <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Credits:</span> All features of <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Good Scribe</span> are
                 accessed with credits. Each user is given a number of credits at the beginning of the month. The number of credits you receive is determined by your pricing plan.
             </h1>
         </div>

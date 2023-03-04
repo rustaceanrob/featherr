@@ -4,7 +4,7 @@ import { getFunctions, httpsCallable } from "firebase/functions"
 export default function BookForm({setSummary, setSummaryLoading}) {
     const [book, setBook] = useState("")
     const [author, setAuthor] = useState("")
-    const [chapter, setChapter] = useState()
+    const [chapter, setChapter] = useState("")
     const [cost, setCost] = useState(1)
     const functions = getFunctions()
     const getChapterByTitleAndAuthor = httpsCallable(functions, 'getChapterByTitleAndAuthor')   
@@ -38,7 +38,7 @@ export default function BookForm({setSummary, setSummaryLoading}) {
                     </div>
                     <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>            
                         <label className='font-extrabold pb-2 pr-2'>Summarize</label>
-                        <input className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit"}/>
+                        <input className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit(s)"}/>
                     </div>
                 </form>
             </div>

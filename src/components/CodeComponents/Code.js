@@ -2,12 +2,10 @@ import React, { useState } from 'react'
 import Loading from '../utility/Loading'
 import CodeBlock from './CodeBlock'
 import CodeInput from './CodeInput'
-import CopyButton from './CopyButton'
 
 export default function Code() {
     const [code, setCode] = useState()
     const [codeLoading, setCodeLoading] = useState(false)
-    
 
     return (
       <div className='flex flex-col pl-20 lg:pl-40 lg:pr-40 md:pl-20 md:pr-20 pr-20 pt-5'>

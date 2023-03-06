@@ -9,7 +9,7 @@ export default function About() {
         </div>
         <div className='border rounded-md px-5 py-5 bg-green-100'>
             <h1 className='font-semibold'>
-                For new users, it is recommended you read this section to get familiar with  <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Good Scribe.</span>
+                For new users, it is recommended you read this section to get familiar with  <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Chewie.</span>
             </h1>
         </div>
         <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
@@ -18,7 +18,7 @@ export default function About() {
         </div>
         <div className='border rounded-md bg-white px-5 py-5'>
             <h1 className='font-semibold'>
-                <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Good Scribe</span> is an application built for learning and productivity. 
+                <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Chewie</span> is an application built for learning and productivity. 
                 Powered by artificial intelligence, 
                 this app can generate summaries for book chapters, create citations, and answer questions you have about a text you are reading.
                 For students and academics, Scribe Pro can help explain confusing concepts in your text and define technical nomenclature. 
@@ -53,8 +53,8 @@ export default function About() {
         </div>
         <div className='border rounded-md bg-white px-5 py-5'>
             <h1 className='font-semibold'>
-                <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Credits:</span> All features of <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Good Scribe</span> are
-                accessed with credits. Each user is given a number of credits at the beginning of the month. The number of credits you receive is determined by your pricing plan.
+                <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Credits:</span> All features of <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Chewie</span> are
+                accessed with credits. You are given a 100 credits for free when you first sign in. If you need more credits, you can purchase more credits from a variety of pricing options.
             </h1>
         </div>
     </div>

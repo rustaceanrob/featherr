@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
 
 .code-font {
-    font-family: 'Tilt Neon', sans-serif;
+    font-family: 'IBM Plex Mono', sans-serif;
     white-space: pre-wrap;
 }

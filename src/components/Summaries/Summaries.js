@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import BookForm from './BookForm'
-import { AiOutlineLoading } from 'react-icons/ai'
+import BookForm from './InputForms/BookForm'
 import { BsInfoCircle } from 'react-icons/bs'
 import Summary from './Summary'
 import Loading from '../utility/Loading'
 export default function Summaries() {
-    const [ media, setMedia ] = useState("book")
     const [ summary, setSummary] = useState()
     const [summaryLoading, setSummaryLoading] = useState(false)
     const [showWarn, setShowWarn] = useState(true)
@@ -16,13 +14,6 @@ export default function Summaries() {
             {/* selection and warning */}
 
             <div className='flex lg:flex-row flex-col justify-center items-center'>
-                <div className='flex justify-center items-center pb-5 pr-2'>
-                    <select className="px-2 py-2 border rounded-md focus:outline-none font-extrabold hover:scale-110 duration-200" onChange={(choice) => setMedia(choice.value)}>
-                        <option value='book'>Books</option>
-                        <option value='academic'>Academic Articles</option>
-                        <option value='tv'>TV Shows</option>
-                    </select>
-                </div>
                 <div>
                     {
                     showWarn ? (
@@ -57,12 +48,19 @@ export default function Summaries() {
     
             ) : (
                 <>
+                    <div className='pt-5'>
+                        <div className='flex flex-row justify-center items-center border px-5 py-5 rounded-lg bg-green-200'>
+                            <h1 className='pl-2 pr-4 text-sm font-normal'>If your book is a textbook or covers an advanced subject, 
+                            please select Technical as the Topic in the advanced settings. 
+                            You may adjust the length of your response in the advanced settings as well.</h1>
+                        </div>
+                    </div>
                     <div className='pt-10 hover:cursor'>
                         <div className='bg-white border rounded-md w-full h-full'>
                             <p className='text-gray-400 px-5 py-5'>Your summary will appear here</p>
                         </div>
                     </div>
-                    <div className='pt-10'>
+                    <div className='pt-10 pb-5'>
                         <Loading isLoading={summaryLoading} message={"We are working on that summary right now"}/> 
                     </div>
                 </>

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { CiLogout } from 'react-icons/ci'
-import Ask from './Ask'
+import Ask from './AskComponents/Ask'
 import About from './utility/About'
-import Citations from './Citations'
+import Citations from './CitationComponents/Citations'
 import Summaries from './Summaries/Summaries'
 import FeatureRouter from './utility/FeatureRouter'
 import Code from './CodeComponents/Code'
@@ -18,7 +18,7 @@ export default function MainView() {
         if (!user) {
             navigate('/login')
         }
-    }, [])
+    }, [user])
 
     const handleSignOut = async () => {
         try {
@@ -55,7 +55,7 @@ export default function MainView() {
                         'Summarize': <Summaries/>,
                         'Code': <Code/>, 
                         'Cite': <Citations/>,
-                        'Interact': <Ask/>,
+                        'Ask': <Ask/>,
                     } [feature]
                 }
             </div>

@@ -38,7 +38,7 @@ export default function Login() {
         <div className='flex flex-col justify-start items-center bg-slate-100 h-screen pt-60'>
             <div className='flex flex-col justify-center items-start'>
                 <h3 className='font-extrabold sm:text-2xl text-xl text-amber-600 pb-5'>{message}</h3>
-                <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600'>Welcome to Good Scribe</h1>
+                <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600'>Welcome to Chewie</h1>
             </div>
             <div className='pt-20 pl-20 pr-20'>
                 <h3 className='flex text-amber-600 justify-center items-center font-bold pb-5'>Please sign in using one of these providers</h3>

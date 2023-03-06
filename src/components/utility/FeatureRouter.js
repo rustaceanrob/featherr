@@ -18,10 +18,10 @@ export default function FeatureRouter({currentFeature, setFeature}) {
             {
                 toggleDrop ? (
                     <div className='absolute top-15 bg-white border rounded-md px-5 py-5 flex flex-col justify-start items-start'>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200' onClick={() => onNavigationClick("Summarize")}>Summarize</button>
+                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200' onClick={() => onNavigationClick("Ask")}>Ask</button>
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Cite")}>Cite</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Interact")}>Interact</button>
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Code")}>Code</button>
+                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Summarize")}>Summarize</button>
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("About")}>About</button>
                     </div>
                 ) : (

@@ -21,7 +21,7 @@ export default function About() {
                 <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Chewie</span> is an application built for learning and productivity. 
                 Powered by artificial intelligence, 
                 this app can generate summaries for book chapters, create citations, and answer questions you have about a text you are reading.
-                For students and academics, Scribe Pro can help explain confusing concepts in your text and define technical nomenclature. 
+                For students and academics, Chewie can help explain confusing concepts in your text and define technical nomenclature. 
                 For fervid readers, this application can provide summaries of text before you buy the publication, 
                 so you can decide if you will do a deep dive into the material.
             </h1>
@@ -33,8 +33,8 @@ export default function About() {
         <div className='border rounded-md bg-white px-5 py-5'>
             <h1 className='font-semibold'>
                 <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700'>Summaries</span> provides customizable synopses of 
-                books, movies, TV shows, and academic publications. You can choose the length and creativity of the response to meet your goals. 
-                This feature is great for "pre-reading" a book to decide if you would like to read it in full. For fiction addicts, Scribe pro will try not to spoil the best portions of the book, 
+                books. You can choose the length and creativity of the response to meet your goals. 
+                This feature is great for "pre-reading" a book to decide if you would like to read it in full. For fiction addicts, Chewie will give key plot developments, 
                 and, for technical readers, the summaries will provide a level of detail that will expand your understanding of a subject in just a couple minutes.
             </h1>
             <h1 className='font-semibold pt-5'>

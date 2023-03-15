@@ -21,7 +21,10 @@ export default function FeatureRouter({currentFeature, setFeature}) {
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200' onClick={() => onNavigationClick("Ask")}>Ask</button>
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Cite")}>Cite</button>
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Code")}>Code</button>
+                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Debug")}>Debug</button>
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Summarize")}>Summarize</button>
+                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("TLDR")}>TLDR</button>
+                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Home")}>Home</button>
                         <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("About")}>About</button>
                     </div>
                 ) : (

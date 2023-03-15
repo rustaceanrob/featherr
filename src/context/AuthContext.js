@@ -4,6 +4,7 @@ import { signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSe
 
 const UserContext = createContext()
 
+
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState({})
 
@@ -19,10 +20,10 @@ export const AuthContextProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-          setUser(currentUser);
+            setUser(currentUser);
         });
         return () => {
-          unsubscribe();
+            unsubscribe();
         };
       }, [])
 

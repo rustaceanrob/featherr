@@ -13,7 +13,7 @@ export default function Citations() {
         { citation ? (
           <div>
                 <Citation citation={citation} setCitationLoading={setCitationLoading}/>
-                <div className='absolute top-5 pr-10'>
+                <div className='absolute top-5 left-5'>
                     <Loading isLoading={citationLoading} message={"We are working on that citation right now"}/> 
                 </div>
           </div>
@@ -25,7 +25,7 @@ export default function Citations() {
                       <p className='font-medium text-gray-400 px-5 py-5'>Your citation will appear here</p>
                   </div>
               </div>
-              <div className='pt-10'>
+              <div className='pt-10 pb-5'>
                   <Loading isLoading={citationLoading} message={"We are working on that citation right now"}/> 
               </div>
           </>

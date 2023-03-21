@@ -4,18 +4,18 @@ import Answer from './Answer'
 import Loading from '../utility/Loading'
 import { TypeAnimation } from 'react-type-animation'
 
-export default function Ask() {
+export default function Ask({credits, setUserCredits}) {
     const [answer, setAnswer] = useState()
     const [answerLoading, setAnswerLoading] = useState(false)
     return (
       <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-60 md:pr-60 pr-20 pt-5'>
-        <AskInput answer={answer} setAnswer={setAnswer} setAnswerLoading={setAnswerLoading}/>
+        <AskInput answer={answer} credits={credits} setUserCredits={setUserCredits} setAnswer={setAnswer} setAnswerLoading={setAnswerLoading}/>
         { answer ? (
           <div>
-                <Answer answer={answer} setAnswerLoading={setAnswerLoading}/>
-                <div className='absolute top-5'>
+                <div className='pt-5 pb-2'>
                     <Loading isLoading={answerLoading} message={"We are working on that answer for you right now"}/> 
                 </div>
+                <Answer answer={answer} setAnswerLoading={setAnswerLoading}/>
           </div>
           ) : (
           <>
@@ -24,7 +24,6 @@ export default function Ask() {
                   <h1 className='font-extrabold pr-2 text-sm'>Try asking:</h1>
                   <TypeAnimation className='p-0 m-0 pt-2 lg:pt-0 text-sm font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600' 
                       sequence={['Can you give me some resume tips?', 2000, 
-                                 'Can you write me a cover letter template?', 2000, 
                                  'What are some good SEO strategies?', 2000, 
                                  'How does WiFi work on planes?', 2000, 
                                  'How does a car engine work?', 2000]}

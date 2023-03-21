@@ -7,7 +7,7 @@ export default function CodeBlock({code, setCodeLoading}) {
         console.log(code)
     }, [code])
     return (
-        <div className='pt-10 w-full hover:cursor pb-10'>
+        <div className='pb-10 w-full hover:cursor'>
             <div className='bg-gradient-to-r from-slate-200 to-slate-300 border rounded-md shadow-xl shadow px-5 py-5 flex flex-row'>
                 <p className='font-normal text-slate-900 code-font'>{code}</p>
             </div>

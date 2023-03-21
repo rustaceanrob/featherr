@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function CitationInput({setCitation, setCitationLoading}) {
+export default function CitationInput({credits, setUserCredits, setCitation, setCitationLoading}) {
     const [book, setBook] = useState("")
     const [author, setAuthor] = useState("")
     const [media, setMedia] = useState("")
@@ -10,15 +10,19 @@ export default function CitationInput({setCitation, setCitationLoading}) {
     const [date, setDate] = useState("")
     const [pageFrom, setPageFrom] = useState("")
     const [pageTo, setPageTo] = useState("")
-    const cost = 1
+    let cost = 1
     const functions = getFunctions()
-    const getCitation = httpsCallable(functions, 'getCitation')   
+    const getCitation = httpsCallable(functions, 'getCitation')
+    const decrementCredits = httpsCallable(functions, 'decrementCredits')      
 
     const getCiteFromGPT = (event) => {
         event.preventDefault()
         getCitation(
-            { title: book, author: author, mediaType: media, citeType: citeType, version: version, pubYear: date, from: pageFrom, to: pageTo }).then((response) => {
-            setCitation(response.data[0].text.trim())
+            { title: book, author: author, mediaType: media, citeType: citeType, version: version, pubYear: date, from: pageFrom, to: pageTo, cost: cost}).then((response) => {
+            setCitation(response.data.text.trim())
+            decrementCredits({cost: cost}).then((response) => {
+                setUserCredits(response.data)
+            })
         }).catch(() => {
             setCitation("There was an error fetching that citation for you. Errors in your citations do not count towards your credits.")
         })
@@ -66,8 +70,17 @@ export default function CitationInput({setCitation, setCitationLoading}) {
                     </div>
                     <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>            
                         <label className='font-extrabold pb-2 pr-2'>Cite</label>
-                        <input className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit(s)"}/>
+                        <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit(s)"}/>
                     </div>
+                    {
+                        credits - cost < 0 ? (
+                            <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
+                                <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                            </div>
+                        ) : (
+                            <></>
+                        )
+                    }
                 </form>
             </div>
         </div>

@@ -3,19 +3,19 @@ import Loading from '../utility/Loading'
 import Summary from '../Summaries/Summary'
 import DebugInput from './DebugInput'
 
-export default function Debug() {
+export default function Debug({credits, setUserCredits}) {
     const [debug, setDebug] = useState()
     const [debugLoading, setDebugLoading] = useState(false)
 
     return (
       <div className='flex flex-col pl-20 lg:pl-40 lg:pr-40 md:pl-20 md:pr-20 pr-20 pt-5'>
-        <DebugInput setDebug={setDebug} setDebugLoading={setDebugLoading}/>
+        <DebugInput credits={credits} setDebug={setDebug} setUserCredits={setUserCredits} setDebugLoading={setDebugLoading}/>
         { debug ? (
           <div>
-                <Summary summary={debug} setSummaryLoading={setDebugLoading}/>
-                <div className='absolute top-5 pr-10'>
+                <div className='pt-5 pb-2'>
                     <Loading isLoading={debugLoading} message={"We are debugging that right now"}/> 
                 </div>
+                <Summary summary={debug} setSummaryLoading={setDebugLoading}/>
           </div>
           ) : (
           <>

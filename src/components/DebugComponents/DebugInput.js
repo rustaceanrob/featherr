@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function DebugInput({setDebug, setDebugLoading}) {
+export default function DebugInput({credits, setUserCredits, setDebug, setDebugLoading}) {
     const [prompt, setPrompt] = useState("")
-    const [cost, setCost] = useState(2)
+    const cost = 2
     const functions = getFunctions()
-    const getDebug = httpsCallable(functions, 'getDebug')   
+    const getDebug = httpsCallable(functions, 'getDebug')
+    const decrementCredits = httpsCallable(functions, 'decrementCredits')     
 
     const getDebugFromGPT = (event) => {
         event.preventDefault()
         getDebug(
-            { codePrompt: prompt}).then((response) => {
-                setDebug(response.data[0].text.trim())
+            { codePrompt: prompt, cost: cost}).then((response) => {
+                setDebug(response.data.content.trim())
+                decrementCredits({cost: cost}).then((response) => {
+                    setUserCredits(response.data)
+                })
         }).catch(() => {
             setDebug("There was an error debugging for you. Errors in debugging code do not count towards your credits.")
         })
@@ -27,8 +31,17 @@ export default function DebugInput({setDebug, setDebugLoading}) {
                 </div>
                 <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>            
                     <label className='font-extrabold pb-2 pr-2'>Debug</label>
-                    <input className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credits"}/>
+                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credits"}/>
                 </div>
+                {
+                    credits - cost < 0 ? (
+                        <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
+                            <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                        </div>
+                    ) : (
+                        <></>
+                    )
+                }
             </form>
         </div>
     )

@@ -2,31 +2,134 @@ const functions = require("firebase-functions");
 const { Configuration, OpenAIApi } = require("openai");
 const admin = require('firebase-admin');
 admin.initializeApp();
-// Admin/DB
-exports.doesNeedUser = functions.https.onCall((data, context) => {
+
+// system messages
+const askSystemMessage = "You are an assistant that answers questions for users. " +    
+                         "You follow this set of guidelines when answering user questions: " + 
+                         "- Answer the question in as much detail as required. " + 
+                         "- Answer the question in one response only. " + 
+                         "- Limit all excess prose. " + 
+                         "- Do not respond to derogatory questions."
+
+// const citationSystemMessage = "You are an assistant that provides citations for media content. " + 
+//                               "You follow these citation guidelines: " + 
+//                               "- Provide only the citation with no additional prose. " + 
+//                               "- Do not add an any information to the citation if you are uncertain of its validity. " +
+//                               "- Adhere to the citation type and versioning requested by the user."
+
+const codeSystemMessage = "You are a programming assistant that produces programs for users. " + 
+                          "You follow these guidelines when producing the code: " +
+                          "- Provide only the code with no additional prose. " + 
+                          "- Provide any necessary comments in the code only. " + 
+                          "- Program in the language or framework provided by the user. " + 
+                          "- If there are multiple solutions to the question, you provide the solution you see fit."
+
+const debugSystemMessage = "You are a programming assistant that helps debug user errors in a readable way. " +
+                           "You follow these guidelines when debugging the errors: " +
+                           "- Provide only explanation and debug steps for the error with no additional prose. " +
+                           "- If there are multiple ways to debug the error. You provide the simplest one."
+
+const summarySystemMessage = "You are an assistant that provides detailed summaries of books for users. " +    
+                            "You follow this set of guidelines when summarizing books and chapters of books: " + 
+                            "- Provide as much detail of the book or chapter as asked by the user. " + 
+                            "- Summarize the book or chapter in one response only. " + 
+                            "- Limit all additional prose."
+
+const tldrSystemMessage = "You are an assistant that provides detailed summaries of text. " +    
+                            "You follow this set of guidelines when summarizing text: " + 
+                            "- Provide as much detail of the text as asked by the user. " + 
+                            "- Summarize the text in one response only. " + 
+                            "- Limit all additional prose."
+
+const mathSystemMessage = "You are a mathematics assistant that provides detailed solutions for problems a user provides. " +
+                            "You follow this set of guidelines when solving their problem: " +
+                            "- Answer the question in one response only. " +
+                            "- Answer the question as concisely as possible. " +
+                            "- List the steps required to solve the problem. " + 
+                            "- Quickly remark on any theorems, equations, constants, or facts used to solve the problem. " + 
+                            "- Provide all necessary calculations or proofs required to solve the problem. " + 
+                            "- Provide the solution in LaTeX format. Use '$' for the inline LaTeX delimiter and '$$' for the block LaTeX delimiter. " + //
+                            "- Do not add any additional prose."
+
+const writingSystemMessage = "You are a writing assistant. You follow this set of guidelines when interacting with users: " +
+                            "- Write what was asked of you in as much detail as required. " + 
+                            "- Produce one response only. " + 
+                            "- Limit all excess prose. " + 
+                            "- Do not respond to derogatory requests."
+
+// utility functions, admin/DB 
+const costPrecondition = (cost) => {
+    if (cost < 1) {
+        throw new functions.https.HttpsError('failed-precondition', 'Invalid credit cost.');
+    }
+} 
+
+const checkCreditPrecondition = (id, cost) => {
+    const usersRef = admin.firestore().collection("users").doc(id)
+    const credits = usersRef.get().then((docSnapshot) => {
+        if (docSnapshot.exists) {
+            const currentCredits = docSnapshot.data().credits
+            if (currentCredits - cost < 0) {
+                throw new functions.https.HttpsError('failed-precondition', 'Insuficient credits.');
+            }
+        } else {
+            throw new functions.https.HttpsError('failed-precondition', 'Insuficient credits.');
+        }
+    });
+}
+
+const checkAuthPrecondition = (context) => {
     if (!context.auth) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
             'while authenticated.');
     }
+}
+
+// exports.updateCredits = functions.pubsub.schedule('* * * * *').onRun((context) => {
+//     admin.firestore().collection("users").get().then(function(querySnapshot) {
+//         querySnapshot.forEach(function(doc) {
+//             const currentCredits = doc.data().credits
+//             functions.logger.log(currentCredits)
+//             doc.set({"credits": 2})
+//         });
+//     });
+// })
+
+exports.decrementCredits = functions.https.onCall((data, context) => {
+    checkAuthPrecondition(context)
+    const usersRef = admin.firestore().collection("users").doc(context.auth.uid)
+    const credits = usersRef.get().then((docSnapshot) => {
+        if (docSnapshot.exists) {
+            const currentCredits = docSnapshot.data().credits
+            const newCredits = usersRef.set({"credits": currentCredits - data.cost})
+            return currentCredits - data.cost
+        } else {
+            throw new functions.https.HttpsError('failed-condition', 'The function must be called ' +
+                                                                            'by a registered user.');
+        }
+    });
+    return credits
+})
+
+exports.doesNeedUser = functions.https.onCall((data, context) => {
+    checkAuthPrecondition(context)
     const usersRef = admin.firestore().collection("users").doc(context.auth.uid)
     const credits = usersRef.get().then((docSnapshot) => {
         if (docSnapshot.exists) {
             return docSnapshot.data().credits
         } else {
-            const setCredits = usersRef.set({"credits": 100})
-            return 100 // after credits are set this is necessarily true
+            const setCredits = usersRef.set({"credits": 50, "tier": "basic"})
+            return 50 // after credits are set this is necessarily true
         }
     });
     return credits
 })
 
 // Open AI calls
-
 exports.getChapterByTitleAndAuthor = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-            'while authenticated.');
-    }
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
     let prompt;
     if (data.chapter === "") {
         prompt = `Please summarize ${data.title} by ${data.author}.`; 
@@ -46,31 +149,26 @@ exports.getChapterByTitleAndAuthor = functions.runWith({ secrets: ["AI"] }).http
     const input = prompt + specification;
     const promptLength = data.promptLength;
     const temperature = data.temperature;
-    functions.logger.info("input: " + input); 
     const configuration = new Configuration({
         apiKey: process.env.AI,
     });
     const openai = new OpenAIApi(configuration);
-    const aiRes = openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: input,
-        max_tokens: promptLength,
+    const aiRes = openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": summarySystemMessage}, 
+                   {"role": "user", "content": input}], 
         temperature: temperature,
-        n: 1
+        max_tokens: promptLength,
     }).then((response) => {
-        functions.logger.info(response.data.choices, {structuredData: true});
-        return response.data.choices;
-    }).catch((error) => {
-        return error
+        return response.data.choices[0].message;
     })
     return aiRes
 })
 
 exports.getCodeFromGPT = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-            'while authenticated.');
-    }
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
     let beginning;
     if (data.language !== '') {
         beginning = `I am writing code in ${data.language}. `
@@ -83,31 +181,33 @@ exports.getCodeFromGPT = functions.runWith({ secrets: ["AI"] }).https.onCall((da
         fullPrompt = data.prompt + "?"
     } else {
         fullPrompt = data.prompt
+    } 
+    let comments;
+    if (data.comments === "None") {
+        comments = " Do not add additional comments."
     }
-    const input = beginning + fullPrompt;
-    functions.logger.info("input: " + input);
+    const input = beginning + fullPrompt + comments;
     const configuration = new Configuration({
         apiKey: process.env.AI,
     });
     const openai = new OpenAIApi(configuration);
-    const aiRes = openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: input,
-        max_tokens: 900,
+    const aiRes = openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": codeSystemMessage}, 
+                   {"role": "user", "content": input}], 
         temperature: 0.1,
-        n: 1,
+        max_tokens: 1000,
     }).then((response) => {
-        functions.logger.info(response.data.choices, {structuredData: true});
-        return response.data.choices;
+        return response.data.choices[0].message;
     })
     return aiRes
 })
 
 exports.getDebug = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-            'while authenticated.');
-    }
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
+    
     const beginning= 'I am having a problem with my code: ';
     const input = beginning + '\n' + data.codePrompt + '\n' + 'How do I fix it?';
     functions.logger.info("input: " + input);
@@ -115,24 +215,21 @@ exports.getDebug = functions.runWith({ secrets: ["AI"] }).https.onCall((data, co
         apiKey: process.env.AI,
     });
     const openai = new OpenAIApi(configuration);
-    const aiRes = openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: input,
-        max_tokens: 300,
-        temperature: 0.1,
-        n: 1,
+    const aiRes = openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": debugSystemMessage}, 
+                   {"role": "user", "content": input}],
     }).then((response) => {
-        functions.logger.info(response.data.choices, {structuredData: true});
-        return response.data.choices;
+        return response.data.choices[0].message;
     })
     return aiRes
 })
 
+//change back to davinci
 exports.getCitation = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-            'while authenticated.');
-    }
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
     let beginning;
     if (data.mediaType === "") {
         beginning = `I need an ${data.citeType} version ${data.version} citation for this: `
@@ -154,7 +251,6 @@ exports.getCitation = functions.runWith({ secrets: ["AI"] }).https.onCall((data,
         pageRange = `I used pages ${data.from} to ${data.to}. `
     }
     const input = beginning + media + publishYear + pageRange;
-    functions.logger.info("input: " + input);
     const configuration = new Configuration({
         apiKey: process.env.AI,
     });
@@ -166,17 +262,15 @@ exports.getCitation = functions.runWith({ secrets: ["AI"] }).https.onCall((data,
         temperature: 0.1,
         n: 1,
     }).then((response) => {
-        functions.logger.info(response.data.choices, {structuredData: true});
-        return response.data.choices;
+        return response.data.choices[0];
     })
     return aiRes
 })
 
 exports.getAnswer = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-            'while authenticated.');
-    }
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
     let prompt;
     if (data.topic === "Book") {
         prompt = `I am reading ${data.title}. `
@@ -190,41 +284,95 @@ exports.getAnswer = functions.runWith({ secrets: ["AI"] }).https.onCall((data, c
         apiKey: process.env.AI,
     });
     const openai = new OpenAIApi(configuration);
-    const aiRes = openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: input,
-        max_tokens: promptLength,
-        temperature: creativity,
-        n: 1
+    const mod = openai.createModeration({
+        input: input,
     }).then((response) => {
-        functions.logger.info(response.data.choices, {structuredData: true});
-        return response.data.choices;
+        if (response.data.results[0].flagged) {
+            throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
+        }
+    })
+    const aiRes = openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": askSystemMessage}, 
+                   {"role": "user", "content": input}], 
+        temperature: creativity,
+        max_tokens: promptLength,
+    }).then((response) => {
+        return response.data.choices[0].message;
     })
     return aiRes
 })
 
 exports.getTLDR = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-            'while authenticated.');
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
+    let summaryStyling = ""
+    if (data.style === "Notes") {
+        summaryStyling = " Please return the summary in a note-taking format."
     }
-    const input = data.prompt + '\n\nTl;dr';
+    const input = data.prompt + '\n\nTl;dr' + summaryStyling;
     const creativity = data.temperature;
-    const promptLength = data.tldrLength;
     const configuration = new Configuration({
         apiKey: process.env.AI,
     });
     const openai = new OpenAIApi(configuration);
-    const aiRes = openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: input,
-        max_tokens: promptLength,
+    const aiRes = openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": tldrSystemMessage}, 
+                   {"role": "user", "content": input}], 
         temperature: creativity,
-        n: 1
     }).then((response) => {
-        functions.logger.info(response.data.choices, {structuredData: true});
-        return response.data.choices;
+        return response.data.choices[0].message;
     })
     return aiRes
 })
 
+exports.getMath = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
+    const input = data.prompt
+    const configuration = new Configuration({
+        apiKey: process.env.AI,
+    });
+    const openai = new OpenAIApi(configuration);
+    const aiRes = openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": mathSystemMessage}, 
+                   {"role": "user", "content": input}], 
+        temperature: 0.1           
+    }).then((response) => {
+        return response.data.choices[0].message;
+    })
+    return aiRes
+})
+
+exports.getWriting = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
+    costPrecondition(data.cost)
+    checkAuthPrecondition(context)
+    checkCreditPrecondition(context.auth.uid, data.cost)
+    const input = data.prompt
+    const temperature = data.creativity
+    const configuration = new Configuration({
+        apiKey: process.env.AI,
+    });
+    const openai = new OpenAIApi(configuration);
+    const mod = openai.createModeration({
+        input: input,
+    }).then((response) => {
+        if (response.data.results[0].flagged) {
+            throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
+        }
+    })
+    const aiRes = openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": writingSystemMessage}, 
+                   {"role": "user", "content": input}], 
+        temperature: temperature,
+        max_tokens: 2500,           
+    }).then((response) => {
+        return response.data.choices[0].message;
+    })
+    return aiRes
+})

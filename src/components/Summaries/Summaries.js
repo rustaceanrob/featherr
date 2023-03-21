@@ -3,7 +3,7 @@ import BookForm from './InputForms/BookForm'
 import { BsInfoCircle } from 'react-icons/bs'
 import Summary from './Summary'
 import Loading from '../utility/Loading'
-export default function Summaries() {
+export default function Summaries({credits, setUserCredits}) {
     const [ summary, setSummary] = useState()
     const [summaryLoading, setSummaryLoading] = useState(false)
     const [showWarn, setShowWarn] = useState(true)
@@ -34,16 +34,16 @@ export default function Summaries() {
 
             {/* switch statement / element for unique forms and warning */}        
 
-            <BookForm summary={summary} setSummary={setSummary} setSummaryLoading={setSummaryLoading}/>
+            <BookForm summary={summary} credits={credits} setUserCredits={setUserCredits} setSummary={setSummary} setSummaryLoading={setSummaryLoading}/>
 
             {/* summary display */}
             
             { summary ? (
                 <>
-                    <Summary summary={summary} setSummaryLoading={setSummaryLoading}/>
-                    <div className='absolute top-5'>
+                    <div className='pt-5 pb-2'>
                         <Loading isLoading={summaryLoading} message={"We are working on that summary right now"}/> 
                     </div>
+                    <Summary summary={summary} setSummaryLoading={setSummaryLoading}/>
                 </>
             ) : (
                 <>

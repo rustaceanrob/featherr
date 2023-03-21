@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FcGoogle } from 'react-icons/fc'
-import { AiFillFacebook, AiOutlineWarning, AiOutlineClose } from 'react-icons/ai'
+import { AiFillGithub, AiOutlineWarning, AiOutlineClose } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 import { TypeAnimation } from 'react-type-animation'
@@ -41,6 +41,9 @@ export default function Login() {
 
     return (
         <div className='flex flex-col justify-start items-center bg-slate-100 h-screen xl:pt-20 pt-40'>
+            <div className='absolute top-10 right-10 px-2 py-2 border border-amber-400 rounded-lg'>
+                <h1 className='font-extrabold text-md xl:text-xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600'>Beta</h1>
+            </div>
             <div className='flex flex-col justify-center items-center md:items-start'>
                 <h3 className='font-extrabold sm:text-2xl text-xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600 pb-5'>{message}</h3>
                 <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600'>Welcome to Feather.</h1>
@@ -62,14 +65,14 @@ export default function Login() {
                         <FcGoogle size={20}/>
                     </button>
                     <div className='flex flex-row justify-center items-center bg-white px-2 py-2 border rounded-md hover:scale-110 hover:cursor-pointer duration-200'>
-                        <h1 className='font-bold pr-2'>Facebook</h1>
-                        <AiFillFacebook className='text-blue-600' size={20}/>
+                        <h1 className='font-bold pr-2'>GitHub</h1>
+                        <AiFillGithub className='text-slate-800' size={20}/>
                     </div>
                 </div>
                 <h3 className='text-sm flex text-amber-600 justify-center items-center font-bold pt-5'>If this is your first time using Feather, sign in to get started for free.</h3>
                 <div className='flex flex-col pt-20 justify-center items-center font-normal pt-20'>
-                    <h3 className='text-xs flex text-amber-600'>By signing into Feather, you agree to the </h3> 
-                    <button onClick={navigateToTerms} className='pt-1 pl-1 text-xs flex text-amber-600 font-bold hover:scale-110 duration-200 underline'>Terms and Conditions.</button>
+                    <h3 className='text-xs flex text-slate-600'>By signing into Feather, you agree to the </h3> 
+                    <button onClick={navigateToTerms} className='pt-1 pl-1 text-xs flex text-slate-600 font-bold hover:scale-110 duration-200 underline'>Terms and Conditions.</button>
                 </div>
             </div>
             {

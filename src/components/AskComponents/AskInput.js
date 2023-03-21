@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 import { CiSettings } from 'react-icons/ci'
 
-export default function AskInput({answer, setAnswer, setAnswerLoading}) {
+export default function AskInput({answer, credits, setAnswer, setUserCredits, setAnswerLoading}) {
     const [book, setBook] = useState("")
     const [question, setQuestion] = useState("")
     const [topic, setTopic] = useState("")
@@ -12,16 +12,20 @@ export default function AskInput({answer, setAnswer, setAnswerLoading}) {
     const [toggleAdvanced, setToggleAdvanced] = useState(false)
     const [cost, setCost] = useState(2)
     const functions = getFunctions()
-    const getAnswer = httpsCallable(functions, 'getAnswer')   
+    const getAnswer = httpsCallable(functions, 'getAnswer')
+    const decrementCredits = httpsCallable(functions, 'decrementCredits')    
 
     const getAnswerFromGPT = (event) => {
         event.preventDefault()
         getAnswer(
-            { topic: topic, title: book, question: question.trim(), temperature: creativity, promptLength: promptLength, detail: giveDetail}).then((response) => {
-            if (answer === response.data[0].text.trim()) {
+            { topic: topic, title: book, question: question.trim(), temperature: creativity, promptLength: promptLength, detail: giveDetail, cost: cost}).then((response) => {
+            if (answer === response.data.content.trim()) {
                 throw new Error("Same Response Error")
             }
-            setAnswer(response.data[0].text.trim())
+            setAnswer(response.data.content.trim())
+            decrementCredits({cost: cost}).then((response) => {
+                setUserCredits(response.data)
+            })
         }).catch(() => {
             setAnswer("There was an error fetching that answer for you. Errors in your answers do not count towards your credits.")
         })
@@ -83,9 +87,18 @@ export default function AskInput({answer, setAnswer, setAnswerLoading}) {
                         </div>
                         <div className='flex flex-col row-span-2 justify-center items-start pt-2'>            
                             <label className='font-extrabold pb-2 pr-2'>Ask</label>
-                            <input className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit(s)"}/>
+                            <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit(s)"}/>
                         </div>
                     </div>
+                    {
+                        credits - cost < 0 ? (
+                            <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
+                                <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                            </div>
+                        ) : (
+                            <></>
+                        )
+                    }
                 </form>
                 <div className='flex pt-5 justify-center items-center'>
                     <button className='flex flex-row justify-center items-center hover:scale-110 duration-200'>

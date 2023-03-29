@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { MathJax } from 'better-react-mathjax'
 import { AiOutlineWarning } from 'react-icons/ai'
+import Feedback from '../utility/Feedback'
 
 export default function Solution({solution, setSolutionLoading}) {
     useEffect(() => {
@@ -23,6 +24,7 @@ export default function Solution({solution, setSolutionLoading}) {
                     </MathJax>
                 </p>
             </div>
+            <Feedback/>
         </div> 
     )
 }

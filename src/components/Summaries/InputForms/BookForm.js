@@ -26,9 +26,6 @@ export default function BookForm({summary, credits, setUserCredits, setSummary, 
         }
         getChapterByTitleAndAuthor(
             { chapter: dynamicChapter, title: book, author: author, promptLength: promptLength, subject: subject, temperature: creativity, cost: cost}).then((response) => {
-            if (summary === response.data.content.trim()) {
-                throw new Error("Same Response Error")
-            }
             setSummary(response.data.content.trim())
             decrementCredits({cost: cost}).then((response) => {
                 setUserCredits(response.data)
@@ -138,8 +135,8 @@ export default function BookForm({summary, credits, setUserCredits, setSummary, 
                 }
                 {
                     credits - cost < 0 ? (
-                        <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
-                            <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                        <div className='flex flex-col justify-center items-center bg-yellow-100 rounded-md px-2 py-2'>            
+                            <h1 className='font-extrabold pr-2'>Please add more credits</h1>
                         </div>
                     ) : (
                         <></>

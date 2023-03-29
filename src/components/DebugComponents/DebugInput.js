@@ -10,6 +10,7 @@ export default function DebugInput({credits, setUserCredits, setDebug, setDebugL
 
     const getDebugFromGPT = (event) => {
         event.preventDefault()
+        setDebug("")
         getDebug(
             { codePrompt: prompt, cost: cost}).then((response) => {
                 setDebug(response.data.content.trim())
@@ -35,8 +36,8 @@ export default function DebugInput({credits, setUserCredits, setDebug, setDebugL
                 </div>
                 {
                     credits - cost < 0 ? (
-                        <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
-                            <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                        <div className='flex flex-col justify-center items-center bg-yellow-100 rounded-md px-2 py-2'>            
+                            <h1 className='font-extrabold pr-2'>Please add more credits</h1>
                         </div>
                     ) : (
                         <></>

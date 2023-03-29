@@ -12,7 +12,7 @@ export default function Citation({citation, setCitationLoading}) {
                 <p className='font-medium' style={{"whiteSpace" : "pre-wrap"}}>{citation}</p>
             </div>
             <div className='flex flex-row justify-end items-end pl-5 pb-5'>
-                <CopyButton code={citation}/>  
+                <CopyButton code={["", citation, ""]}/>  
             </div>
             <div className='flex flex-col justify-center items-center border px-5 py-5 pt-5 rounded-lg bg-gradient-to-r from-amber-400/40 to-orange-400/40'>
                 <div className='flex flex-row justify-center items-center'>

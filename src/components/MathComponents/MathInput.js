@@ -11,18 +11,15 @@ export default function MathInput({solution, credits, setUserCredits, setSolutio
 
     const getSolution = (event) => {
         event.preventDefault()
+        setSolution("")
         getMath(
             {prompt: prompt, cost: cost}).then((response) => {
-                if (solution === response.data.content.trim()) {
-                    throw new Error("Same Response Error")
-                }
-                console.log(response.data.content.trim())
                 setSolution(response.data.content.trim())
                 decrementCredits({cost: cost}).then((response) => {
                     setUserCredits(response.data)
                 })
         }).catch(() => {
-            setSolution("There was an error fetching that code for you. Errors in retrieving code do not count towards your credits.")
+            setSolution("There was an error fetching that answer for you. Errors in retrieving solutions do not count towards your credits.")
         })
         setSolutionLoading(true)
     }
@@ -46,8 +43,8 @@ export default function MathInput({solution, credits, setUserCredits, setSolutio
                 </div>
                 {
                     credits - cost < 0 ? (
-                        <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
-                            <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                        <div className='flex flex-col justify-center items-center bg-yellow-100 rounded-md px-2 py-2'>            
+                            <h1 className='font-extrabold pr-2'>Please add more credits</h1>
                         </div>
                     ) : (
                         <></>
@@ -57,4 +54,3 @@ export default function MathInput({solution, credits, setUserCredits, setSolutio
         </div>
     )
 }
-// disabled={credits - cost < 0}

@@ -24,8 +24,8 @@ export default function Ask({credits, setUserCredits}) {
                   <h1 className='font-extrabold pr-2 text-sm'>Try asking:</h1>
                   <TypeAnimation className='p-0 m-0 pt-2 lg:pt-0 text-sm font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600' 
                       sequence={['Can you give me some resume tips?', 2000, 
-                                 'What are some good SEO strategies?', 2000, 
-                                 'How does WiFi work on planes?', 2000, 
+                                 'Can you help me reword this sentence?', 2000, 
+                                 'Can you give me an AP biology question on celluar metabolism?', 2000, 
                                  'How does a car engine work?', 2000]}
                       repeat={Infinity}/>
                 </div>

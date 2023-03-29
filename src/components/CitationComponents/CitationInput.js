@@ -8,6 +8,7 @@ export default function CitationInput({credits, setUserCredits, setCitation, set
     const [citeType, setCiteType] = useState("MLA")
     const [version, setVersion] = useState("")
     const [date, setDate] = useState("")
+    const [publisher, setPublisher] = useState("")
     const [pageFrom, setPageFrom] = useState("")
     const [pageTo, setPageTo] = useState("")
     let cost = 1
@@ -17,8 +18,9 @@ export default function CitationInput({credits, setUserCredits, setCitation, set
 
     const getCiteFromGPT = (event) => {
         event.preventDefault()
+        setCitation("")
         getCitation(
-            { title: book, author: author, mediaType: media, citeType: citeType, version: version, pubYear: date, from: pageFrom, to: pageTo, cost: cost}).then((response) => {
+            { title: book, author: author, mediaType: media, citeType: citeType, version: version, publisher: publisher, pubYear: date, from: pageFrom, to: pageTo, cost: cost}).then((response) => {
             setCitation(response.data.text.trim())
             decrementCredits({cost: cost}).then((response) => {
                 setUserCredits(response.data)
@@ -46,6 +48,10 @@ export default function CitationInput({credits, setUserCredits, setCitation, set
                         </select>
                     </div>
                     <div className='flex flex-col justify-center items-start'>
+                        <label className='font-extrabold pb-2 pr-2'>{citeType} Version</label>
+                        <input className="w-full block px-1 py-1 rounded-md shadow-sm focus:outline-none" type="number" value={version} placeholder="8" maxlength="5" required onChange={(e) => setVersion(e.target.value)}/>
+                    </div>
+                    <div className='flex flex-col justify-center items-start'>
                         <label className='font-extrabold pb-2'>Title</label>
                         <input className="w-full  block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={book} maxlength="150" required placeholder="Title" onChange={(e) => setBook(e.target.value)}/>
                     </div>
@@ -53,13 +59,13 @@ export default function CitationInput({credits, setUserCredits, setCitation, set
                         <label className='font-extrabold pb-2'>Author <span className='font-normal'>(Optional)</span></label>
                         <input className="w-full block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={author} maxlength="100" placeholder="Author" onChange={(e) => setAuthor(e.target.value)}/>
                     </div>
-                    <div className='flex flex-col justify-center items-start'>
-                        <label className='font-extrabold pb-2 pr-2'>{citeType} Version</label>
-                        <input className="w-full block px-1 py-1 rounded-md shadow-sm focus:outline-none" type="number" value={version} placeholder="8" maxlength="100" required onChange={(e) => setVersion(e.target.value)}/>
-                    </div>
                     <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>
                         <label className='font-extrabold pb-2'>Date <span className='font-normal'>(Optional)</span></label>
                         <input className="w-full block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={date} maxlength="100" placeholder="Date of publication" onChange={(e) => setDate(e.target.value)}/>
+                    </div>
+                    <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>
+                        <label className='font-extrabold pb-2'>Publisher <span className='font-normal'>(Optional)</span></label>
+                        <input className="w-full block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={publisher} maxlength="100" placeholder="Publisher" onChange={(e) => setPublisher(e.target.value)}/>
                     </div>
                     <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>
                         <label className='font-extrabold pb-2'>Page Range <span className='font-normal'>(Optional)</span></label>
@@ -74,8 +80,8 @@ export default function CitationInput({credits, setUserCredits, setCitation, set
                     </div>
                     {
                         credits - cost < 0 ? (
-                            <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
-                                <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                            <div className='flex flex-col justify-center items-center bg-yellow-100 rounded-md px-2 py-2'>            
+                                <h1 className='font-extrabold pr-2'>Please add more credits</h1>
                             </div>
                         ) : (
                             <></>

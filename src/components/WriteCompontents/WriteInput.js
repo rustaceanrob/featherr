@@ -12,11 +12,9 @@ export default function WriteInput({draft, credits, setUserCredits, setDraft, se
     const getDraftFromGPT = (event) => {
         event.preventDefault()
         console.log(creativity)
+        setDraft("")
         getWriting(
             { prompt: prompt, temperature: creativity, cost: cost}).then((response) => {
-                if (draft === response.data.content.trim()) {
-                    throw new Error("Same Response Error")
-                }
                 setDraft(response.data.content.trim())
                 decrementCredits({cost: cost}).then((response) => {
                     setUserCredits(response.data)
@@ -37,8 +35,8 @@ export default function WriteInput({draft, credits, setUserCredits, setDraft, se
                 <div className='flex flex-col'>
                     <label className='font-extrabold pb-2'>Output Style</label>
                     <div className='flex flex-row justify-center items-center'>
-                        <h1 className='text-slate-600 font-extrabold pr-2 justify-between items-center'>Concise</h1>
-                        <input className="range outline-none focus-none accent-slate-200 w-full flex flex-row justify-center items-center" type="range" min={10} max={130} onChange={(e) => setCreativity(e.target.value / 100)}/>
+                        <h1 className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 font-extrabold pr-2 justify-between items-center'>Concise</h1>
+                        <input className="range outline-none focus-none accent-blue-600 w-full flex flex-row justify-center items-center" type="range" min={10} max={130} defaultValue={30} onChange={(e) => setCreativity(e.target.value / 100)}/>
                         <h1 className='pl-2 text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-400 font-extrabold justify-center items-center'>Creative</h1>
                     </div>
                 </div>
@@ -48,8 +46,8 @@ export default function WriteInput({draft, credits, setUserCredits, setDraft, se
                 </div>
                 {
                     credits - cost < 0 ? (
-                        <div className='flex flex-col justify-center items-center pt-2  bg-yellow-100 rounded-md px-2 py-2'>            
-                            <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                        <div className='flex flex-col justify-center items-center bg-yellow-100 rounded-md px-2 py-2'>            
+                            <h1 className='font-extrabold pr-2'>Please add more credits</h1>
                         </div>
                     ) : (
                         <></>

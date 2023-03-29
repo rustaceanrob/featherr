@@ -12,17 +12,22 @@ export default function CodeInput({code, credits, setUserCredits, setCode, setCo
 
     const getCode = (event) => {
         event.preventDefault()
+        setCode("")
         getCodeFromGPT(
             { language: language, prompt: prompt, comments: comments, cost: cost}).then((response) => {
-                if (code === response.data.content.trim()) {
-                    throw new Error("Same Response Error")
+                const codeAndText = response.data.content.trim()
+                const regex = /```[^`\s]*\s?/g
+                const codeBlocks = codeAndText.split(regex)
+                if (codeBlocks.length === 1) {
+                    codeBlocks.unshift("")
+                    codeBlocks.push("")
                 }
-                setCode(response.data.content.trim())
+                setCode(codeBlocks)
                 decrementCredits({cost: cost}).then((response) => {
                     setUserCredits(response.data)
                 })
         }).catch(() => {
-            setCode("There was an error fetching that code for you. Errors in retrieving code do not count towards your credits.")
+            setCode(["There was an error fetching that code for you. Errors in retrieving code do not count towards your credits."])
         })
         setCodeLoading(true)
     }
@@ -51,8 +56,8 @@ export default function CodeInput({code, credits, setUserCredits, setCode, setCo
                 </div>
                 {
                     credits - cost < 0 ? (
-                        <div className='flex flex-col justify-center items-center pt-2 bg-yellow-100 rounded-md px-2 py-2'>            
-                            <h1 className='font-extrabold pb-2 pr-2'>Please add more credits</h1>
+                        <div className='flex flex-col justify-center items-center bg-yellow-100 rounded-md px-2 py-2'>            
+                            <h1 className='font-extrabold pr-2'>Please add more credits</h1>
                         </div>
                     ) : (
                         <></>

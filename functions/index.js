@@ -44,8 +44,7 @@ const tldrSystemMessage = "You are an assistant that provides detailed summaries
 const mathSystemMessage = "You are a mathematics assistant that provides detailed solutions for problems a user provides. " +
                             "You follow this set of guidelines when solving their problem: " +
                             "- Answer the question in one response only. " +
-                            "- Answer the question as concisely as possible. " +
-                            "- List the steps required to solve the problem. " + 
+                            "- List all the steps required to solve the problem. " + 
                             "- Quickly remark on any theorems, equations, constants, or facts used to solve the problem. " + 
                             "- Provide all necessary calculations or proofs required to solve the problem. " + 
                             "- Provide the solution in LaTeX format. Use '$' for the inline LaTeX delimiter and '$$' for the block LaTeX delimiter. " + //
@@ -85,16 +84,6 @@ const checkAuthPrecondition = (context) => {
     }
 }
 
-// exports.updateCredits = functions.pubsub.schedule('* * * * *').onRun((context) => {
-//     admin.firestore().collection("users").get().then(function(querySnapshot) {
-//         querySnapshot.forEach(function(doc) {
-//             const currentCredits = doc.data().credits
-//             functions.logger.log(currentCredits)
-//             doc.set({"credits": 2})
-//         });
-//     });
-// })
-
 exports.decrementCredits = functions.https.onCall((data, context) => {
     checkAuthPrecondition(context)
     const usersRef = admin.firestore().collection("users").doc(context.auth.uid)
@@ -114,15 +103,22 @@ exports.decrementCredits = functions.https.onCall((data, context) => {
 exports.doesNeedUser = functions.https.onCall((data, context) => {
     checkAuthPrecondition(context)
     const usersRef = admin.firestore().collection("users").doc(context.auth.uid)
-    const credits = usersRef.get().then((docSnapshot) => {
+    const info = usersRef.get().then((docSnapshot) => {
         if (docSnapshot.exists) {
-            return docSnapshot.data().credits
+            credits = docSnapshot.data().credits
+            return {credits: credits, page: "Home"}
         } else {
             const setCredits = usersRef.set({"credits": 50, "tier": "basic"})
-            return 50 // after credits are set this is necessarily true
+            return {credits: 50,  page: "About"}  // after credits are set this is necessarily true
         }
     });
-    return credits
+    return info
+})
+
+exports.giveFeedback = functions.https.onCall((data, context) => {
+    checkAuthPrecondition(context)
+    const feedback = data.indicator
+    const newDoc = admin.firestore().collection("feedback").doc().set({"feedback": feedback})
 })
 
 // Open AI calls
@@ -194,9 +190,9 @@ exports.getCodeFromGPT = functions.runWith({ secrets: ["AI"] }).https.onCall((da
     const aiRes = openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{"role": "system", "content": codeSystemMessage}, 
-                   {"role": "user", "content": input}], 
+                   {"role": "user", "content": input}],
+        max_tokens: 2000, 
         temperature: 0.1,
-        max_tokens: 1000,
     }).then((response) => {
         return response.data.choices[0].message;
     })
@@ -242,6 +238,10 @@ exports.getCitation = functions.runWith({ secrets: ["AI"] }).https.onCall((data,
     } else {
         media = data.title + ". "
     }
+    let publisher = ""
+    if (data.publisher !== '') {
+        publisher = `The work was published by ${data.publisher}. `
+    }
     let publishYear = ''
     if (data.pubYear !== '') {
         publishYear = `The work was published in ${data.pubYear}. `
@@ -250,7 +250,7 @@ exports.getCitation = functions.runWith({ secrets: ["AI"] }).https.onCall((data,
     if (data.from !== '') {
         pageRange = `I used pages ${data.from} to ${data.to}. `
     }
-    const input = beginning + media + publishYear + pageRange;
+    const input = beginning + media + publisher + publishYear + pageRange;
     const configuration = new Configuration({
         apiKey: process.env.AI,
     });
@@ -340,8 +340,9 @@ exports.getMath = functions.runWith({ secrets: ["AI"] }).https.onCall((data, con
     const aiRes = openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{"role": "system", "content": mathSystemMessage}, 
+                   {"role": "user", "content": "List the steps to solve the following."},
                    {"role": "user", "content": input}], 
-        temperature: 0.1           
+        temperature: 0.0005           
     }).then((response) => {
         return response.data.choices[0].message;
     })

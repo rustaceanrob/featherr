@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { CiLogout } from 'react-icons/ci'
 import { MdDownloading } from 'react-icons/md'
 import { GrAddCircle } from 'react-icons/gr'
+import Logo from '../assets/logo2.png'
 import Ask from './AskComponents/Ask'
 import About from './utility/About'
 import Citations from './CitationComponents/Citations'
@@ -17,6 +18,7 @@ import Home from './HomeComponents/Home'
 import MathView from './MathComponents/MathView'
 import WriteComponent from './WriteCompontents/WriteComponent'
 import AddCreditsPage from './utility/AddCreditsPage'
+import Account from './utility/Account'
 
 export default function MainView() {
     const navigate = useNavigate()
@@ -31,7 +33,8 @@ export default function MainView() {
             navigate('/login')
         }
         doesNeedUser().then((response) => {
-            setUserCredits(response.data)
+            setUserCredits(response.data.credits)
+            setFeature(response.data.page)
         })
     }, [user])
 
@@ -47,7 +50,7 @@ export default function MainView() {
     return (
         <>
             <div className='bg-gray-100'>
-                <div className='flex flex-row justify-end items-center pr-10 pt-5 sm:pb-4 pb-2 border-b'> 
+                <div className='flex flex-row justify-end items-center pr-5 md:pr-10 pt-5 sm:pb-4 pb-2 border-b'> 
                     <div className='flex flex-row'>
                         {
                             userCredits ? (
@@ -62,11 +65,12 @@ export default function MainView() {
                                 <span className='text-sm font-bold'>Credits</span>
                             </button>
                         </div>
-                        <button className="flex flex-row justify-center items-center rounded border px-2 py-2 bg-white hover:scale-110 duration-200" onClick={handleSignOut}>
+                        <button className="flex flex-row justify-center items-center rounded border pr-2 px-2 py-2 bg-white hover:scale-110 duration-200" onClick={handleSignOut}>
                             <span className='text-sm font-bold'>Sign Out</span>
                             <CiLogout size={16} className='sm:ml-2 ml-1'/>
                         </button>
-                        {
+                        <img className="justify-center items-center img-thumbnail hidden sm:block object-contain h-8 w-8 rounded-3xl ml-5" src={Logo} alt={""}/>
+                        {/* {
                             user.photoURL ? (
                                 <>
                                     <img className="img-thumbnail hidden sm:block object-contain h-10 w-10 rounded-3xl ml-5" src={user.photoURL} alt={""}/>
@@ -74,8 +78,7 @@ export default function MainView() {
                             ) : (
                                 <></>
                             )
-                        }
-                        
+                        } */}  
                     </div>
                 </div>
                 <FeatureRouter currentFeature={feature} setFeature={setFeature}/>
@@ -91,6 +94,7 @@ export default function MainView() {
                         'Write': <WriteComponent credits={userCredits} setUserCredits={setUserCredits}/>,
                         'Ask': <Ask credits={userCredits} setUserCredits={setUserCredits}/>,
                         'Add': <AddCreditsPage/>,
+                        'Account': <Account user={user} credits={userCredits}/>,
                         'Home': <Home setFeature={setFeature}/>
                     } [feature]
                 }

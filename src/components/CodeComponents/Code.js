@@ -22,11 +22,6 @@ export default function Code({credits, setUserCredits}) {
           ) : (
           <>
             <div className='pt-5'>
-                <div className='flex flex-row justify-center items-center border px-5 py-5 rounded-lg bg-green-200'>
-                    <h1 className='pl-2 pr-4 text-sm font-normal'>For the best results, make an assertive statement as to what to code. For example, "Write a function that does..." and remember to add punctuation.</h1>
-                </div>
-            </div>
-            <div className='pt-5'>
                 <div className='flex flex-col lg:flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
                   <h1 className='font-extrabold pr-2 text-sm'>Try asking:</h1>
                   <TypeAnimation className='p-0 m-0 pt-2 lg:pt-0 text-sm font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600' 

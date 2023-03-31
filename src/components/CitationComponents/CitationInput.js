@@ -35,7 +35,7 @@ export default function CitationInput({credits, setUserCredits, setCitation, set
         <div>
             <div>
                 <form onSubmit={getCiteFromGPT} className="border rounded-lg px-5 py-5 grid grid-cols-1 gap-2 justify-center items-center">
-                    <div className='grid grid-cols-2 gap-32 justify-center items-center pb-5'>
+                    <div className='grid grid-cols-2 gap-16 sm:gap-32 justify-center items-center pb-5'>
                         <select className="px-2 py-2 border rounded-md focus:outline-none font-extrabold hover:animate-pulse" required onChange={(e) => setMedia(e.target.value)}>
                             <option value='Book'>Book</option>
                             <option value='Article'>Article</option>

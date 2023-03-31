@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function About({setFeature}) {
     const navigate = useNavigate()
     return (
-        <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-10 pb-10'>
+        <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 sm:pr-20 pr-5 pl-5 pt-10 pb-10'>
             <div className='flex flex-row jusify-center items-center pb-5'>
                 <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Hi!</h1>
             </div>

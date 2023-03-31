@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { MathJaxContext } from 'better-react-mathjax'
 import Loading from '../utility/Loading'
 import Solution from './Solution'
@@ -8,7 +7,9 @@ import MathInput from './MathInput'
 export default function MathView({credits, setUserCredits}) {
     const [solution, setSolution] = useState()
     const [solutionLoading, setSolutionLoading] = useState(false)
-    const navigate = useNavigate()
+    const handleOpen = (page) => {
+        window.open('/' + page, '_blank');
+    }
     const mjaxConfig = {
       loader: { load: ["[tex]/html"] },
       tex: {
@@ -26,7 +27,7 @@ export default function MathView({credits, setUserCredits}) {
 
     return (
       <MathJaxContext version={3} config={mjaxConfig}>
-      <div className='flex flex-col pl-20 lg:pl-40 lg:pr-40 md:pl-20 md:pr-20 pr-20 pt-5'>
+      <div className='flex flex-col lg:pl-60 lg:pr-60 md:pl-20 md:pr-20 sm:pl-20 sm:pr-20 pl-5 pr-5 pt-5'>
         <MathInput solution={solution} credits={credits} setUserCredits={setUserCredits} setSolution={setSolution} setSolutionLoading={setSolutionLoading}/>
         { solution ? (
           <div>
@@ -39,8 +40,8 @@ export default function MathView({credits, setUserCredits}) {
           <>
             <div className='pt-5 justify-center items-center' >
               <div className='flex flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
-                <h1 className='font-extrabold pr-2 text-sm'>Not sure where to start? Check out the <span className='font-extrabold hover:animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'><button onClick={() => navigate("/mathguide")}>Math Guide</button></span>. 
-                Looking for a LaTeX command? Check out the <span className='font-extrabold hover:animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'><button onClick={() => navigate("/latextable")}>LaTeX Table</button></span>. </h1>
+                <h1 className='font-extrabold pr-2 text-sm'>Not sure where to start? Check out the <span className='font-extrabold hover:animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'><button onClick={() => handleOpen("mathguide")}>Math Guide</button></span>. 
+                Looking for a LaTeX command? Check out the <span className='font-extrabold hover:animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'><button onClick={() => handleOpen("latextable")}>LaTeX Table</button></span>. </h1>
                 <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-amber-900'></span>
               </div>
             </div>

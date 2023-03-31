@@ -1,6 +1,9 @@
 const functions = require("firebase-functions");
+const { defineSecret } = require('firebase-functions/params');
 const { Configuration, OpenAIApi } = require("openai");
 const admin = require('firebase-admin');
+const stripeApiKey = defineSecret('firestore-stripe-payments-STRIPE_API_KEY');
+const stripeWhSec = defineSecret('firestore-stripe-payments-STRIPE_WEBHOOK_SECRET');
 admin.initializeApp();
 
 // system messages
@@ -84,6 +87,29 @@ const checkAuthPrecondition = (context) => {
     }
 }
 
+exports.updateCreditsOnSuccess = functions.runWith({ secrets: [stripeApiKey, stripeWhSec] }).https.onRequest(async (req, res) => {
+    const apiKey = "rk_test_51MovlrGjPi5BxZQHGKIFD1DwqZWSHmIzNlxvWvVG9E13WEC3afNTakff3OrYVlk7bUqwslu4STZyfOAmKGGIRQ8N00BsRL9nEa"
+    const whSec = "whsec_DDABKpWfduZ2LT8QVb7PdJCWMa32mfW3"
+    const stripe = require('stripe')("rk_test_51MovlrGjPi5BxZQHGKIFD1DwqZWSHmIzNlxvWvVG9E13WEC3afNTakff3OrYVlk7bUqwslu4STZyfOAmKGGIRQ8N00BsRL9nEa");
+    const sig = req.headers['stripe-signature'];
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(req.rawBody, sig, whSec);
+        console.log(event.type)
+        if (event.type === "payment_intent.succeeded") {
+            const paymentIntent = event.data.object;
+            const meta = paymentIntent.metadata;
+            functions.logger.log(meta)
+        }
+    } catch(error) {
+        functions.logger.log("Failure to verify Webhook signature")
+        functions.logger.log(error)
+        return res.sendStatus(400)
+    }
+    res.sendStatus(200);
+  });
+
 exports.decrementCredits = functions.https.onCall((data, context) => {
     checkAuthPrecondition(context)
     const usersRef = admin.firestore().collection("users").doc(context.auth.uid)
@@ -105,15 +131,16 @@ exports.doesNeedUser = functions.https.onCall((data, context) => {
     const usersRef = admin.firestore().collection("users").doc(context.auth.uid)
     const info = usersRef.get().then((docSnapshot) => {
         if (docSnapshot.exists) {
-            credits = docSnapshot.data().credits
-            return {credits: credits, page: "Home"}
+            const credits = docSnapshot.data().credits
+            return {credits: credits, page: ""}
         } else {
-            const setCredits = usersRef.set({"credits": 50, "tier": "basic"})
-            return {credits: 50,  page: "About"}  // after credits are set this is necessarily true
+            const setCredits = usersRef.set({"credits": 100, "tier": "basic"})
+            return {credits: 100,  page: "About"}  // after credits are set this is necessarily true
         }
     });
     return info
 })
+
 
 exports.giveFeedback = functions.https.onCall((data, context) => {
     checkAuthPrecondition(context)

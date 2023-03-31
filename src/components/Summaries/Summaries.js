@@ -9,7 +9,7 @@ export default function Summaries({credits, setUserCredits}) {
     const [showWarn, setShowWarn] = useState(true)
 
     return (
-        <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-5'>
+        <div className='flex flex-col lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 sm:pl-20 sm:pr-20 pl-5 pr-5 pt-5'>
 
             {/* selection and warning */}
 

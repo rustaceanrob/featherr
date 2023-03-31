@@ -17,7 +17,7 @@ export default function CodeBlock({code, setCodeLoading}) {
                         return ( <div>
                                 { codes ? (
                                     <div className='bg-white border rounded-md shadow-xl shadow px-5 py-5'>
-                                        <p className='font-bold' style={{"whiteSpace" : "pre-wrap"}}>{codes.trim()}</p>
+                                        <p className='font-semibold' style={{"whiteSpace" : "pre-wrap"}}>{codes.trim()}</p>
                                     </div>
                                 ) : (
                                         <></>

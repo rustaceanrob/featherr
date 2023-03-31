@@ -11,7 +11,7 @@ export default function MathGuide() {
       }, [])
 
     return (
-            <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-10 pb-10 bg-gray-100'>
+            <div className='flex flex-col sm:pl-20 sm:pr-20 pl-5 pr-5 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40  pt-10 pb-10 bg-gray-100'>
                 <div className='flex flex-col justify-center items-center border rounded-md px-5 py-5 bg-green-200'>
                     <h1 className='font-extrabold'>
                         In a hurry? Skip to the Quick Start below.

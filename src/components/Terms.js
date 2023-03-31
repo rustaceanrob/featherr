@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Terms() {
     return (
-        <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-10 pb-10 bg-gray-100'>
+        <div className='flex flex-col sm:pl-20 sm:pr-20 pl-5 pr-5 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40  pt-10 pb-10 bg-gray-100'>
             <div className='bg-white px-5 py-2 border rounded-md'>
                 <h1 className='flex pt-5 font-extrabold text-2xl'>Terms of Service</h1>
                 <h1 className='flex pt-5 font-bold text-gray-900'>Welcome to Featherr, a cutting-edge application driven by Generative Artificial Intelligence (AI).</h1>

@@ -8,7 +8,7 @@ export default function Citations({credits, setUserCredits}) {
     const [citationLoading, setCitationLoading] = useState(false)
     
     return (
-      <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-5'>
+      <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 sm:pr-20 pl-5 pr-5 pt-5'>
         <CitationInput credits={credits} setUserCredits={setUserCredits} setCitation={setCitation} setCitationLoading={setCitationLoading}/>
         { citation ? (
           <div>

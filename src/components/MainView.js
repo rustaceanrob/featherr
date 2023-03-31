@@ -34,7 +34,9 @@ export default function MainView() {
         }
         doesNeedUser().then((response) => {
             setUserCredits(response.data.credits)
-            setFeature(response.data.page)
+            if (response.data.page) {
+                setFeature(response.data.page)
+            }
         })
     }, [user])
 
@@ -59,7 +61,7 @@ export default function MainView() {
                                 <h1 className='flex flex-row font-bold text-sm text-slate-400 justify-center items-center pr-4'><MdDownloading size={20} className='animate-pulse mr-2'/> Credits</h1>
                             )
                         }
-                        <div className='pr-2 flex flex-row  justify-center items-center'>
+                        <div className='pr-2 flex flex-row hidden sm:block justify-center items-center'>
                             <button className="flex flex-row justify-center items-center rounded border px-2 py-2 bg-gradient-to-r bg-white hover:animate-pulse hover:from-amber-600 hover:to-amber-400 hover:scale-110 duration-200" onClick={() => setFeature("Add")}>
                                 <GrAddCircle className='mr-1 text-amber-200'/>
                                 <span className='text-sm font-bold'>Credits</span>
@@ -94,7 +96,7 @@ export default function MainView() {
                         'Write': <WriteComponent credits={userCredits} setUserCredits={setUserCredits}/>,
                         'Ask': <Ask credits={userCredits} setUserCredits={setUserCredits}/>,
                         'Add': <AddCreditsPage/>,
-                        'Account': <Account user={user} credits={userCredits}/>,
+                        'Account': <Account user={user} credits={userCredits} setFeature={setFeature}/>,
                         'Home': <Home setFeature={setFeature}/>
                     } [feature]
                 }

@@ -8,7 +8,7 @@ export default function Ask({credits, setUserCredits}) {
     const [answer, setAnswer] = useState()
     const [answerLoading, setAnswerLoading] = useState(false)
     return (
-      <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-60 md:pr-60 pr-20 pt-5'>
+      <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-60 md:pr-60 sm:pr-20 pl-5 pr-5 pt-5'>
         <AskInput answer={answer} credits={credits} setUserCredits={setUserCredits} setAnswer={setAnswer} setAnswerLoading={setAnswerLoading}/>
         { answer ? (
           <div>

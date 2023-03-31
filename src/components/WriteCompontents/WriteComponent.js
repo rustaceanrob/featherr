@@ -10,7 +10,7 @@ export default function WriteComponent({credits, setUserCredits}) {
     const [draftLoading, setDraftLoading] = useState(false)
 
     return (
-      <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-5'>
+      <div className='flex flex-col sm:pl-20 sm:pr-20 pl-5 pr-5 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pt-5'>
         <WriteInput draft={draft} credits={credits} setDraft={setDraft} setUserCredits={setUserCredits} setDraftLoading={setDraftLoading}/>
         { draft ? (
           <div>

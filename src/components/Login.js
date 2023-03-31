@@ -61,7 +61,7 @@ export default function Login() {
                 </div>
             </div>
             <div className='pt-20 lg:pl-40 lg:pr-40 pl-20 pr-20'>
-                <h3 className='text-md flex text-blue-600 justify-center items-center font-bold pb-5'>Please sign in with one of these providers.</h3>
+                <h3 className='text-md flex text-blue-600 justify-center items-center font-bold pb-5'>Please sign in with Google to continue.</h3>
                 <div className='grid sm:grid-cols-2 grid-cols-1 sm:gap-4 gap-1 bg-white border rounded justify-between items-center px-5 py-5'>
                     <button onClick={handleGoogle} className='flex flex-row justify-center items-center bg-white px-2 py-2 border rounded-md hover:scale-110 hover:cursor-pointer duration-200'>
                         <h1 className='font-bold pr-2'>Google</h1>

@@ -18,10 +18,6 @@ export default function CodeInput({code, credits, setUserCredits, setCode, setCo
                 const codeAndText = response.data.content.trim()
                 const regex = /```[^`\s]*\s?/g
                 const codeBlocks = codeAndText.split(regex)
-                if (codeBlocks.length === 1) {
-                    codeBlocks.unshift("")
-                    codeBlocks.push("")
-                }
                 setCode(codeBlocks)
                 decrementCredits({cost: cost}).then((response) => {
                     setUserCredits(response.data)
@@ -36,12 +32,12 @@ export default function CodeInput({code, credits, setUserCredits, setCode, setCo
         <div>
             <form className="border rounded-lg px-5 py-5 grid grid-cols-1  gap-2 justify-center items-center" onSubmit={getCode}>
                 <div className='flex flex-col justify-center items-start'>
-                    <label className='font-extrabold pb-2'>Programming language</label>
+                    <label className='font-extrabold pb-2'>Programming language or framework</label>
                     <input className="w-full  block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={language} placeholder="What are you coding in?" maxlength="100" required onChange={(e) => setLanguage(e.target.value)}/>
                 </div>
                 <div className='flex flex-col justify-center items-start'>
                     <label className='font-extrabold pb-2'>What you would like to be programmed?</label>
-                    <textarea rows="4" maxlength="1500" className="w-full block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={prompt} placeholder="Tell Feather what to code."  required onChange={(e) => setPrompt(e.target.value)}/>
+                    <textarea rows="3" maxlength="1500" className="w-full block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={prompt} placeholder="Tell Featherr what to code."  required onChange={(e) => setPrompt(e.target.value)}/>
                 </div>
                 <div className='flex flex-col col-span-1'>
                     <label className='font-extrabold pb-2'>Comments</label>

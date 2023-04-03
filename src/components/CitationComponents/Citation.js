@@ -18,7 +18,7 @@ export default function Citation({citation, setCitationLoading}) {
                 <div className='flex flex-row justify-center items-center'>
                     <AiOutlineWarning size={25}/>
                     <h1 className='pl-4 text-sm font-bold'>
-                        Feather will give a "best guess" for missing information. 
+                        Featherr will give a "best guess" for missing information. 
                         Please check the source is correct before use.
                     </h1>
                 </div>

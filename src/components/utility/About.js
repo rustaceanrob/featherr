@@ -22,7 +22,7 @@ export default function About({setFeature}) {
                     <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> is an application built for learning and productivity. 
                     Powered by artificial intelligence, 
                     this app generates writing drafts, book and text summaries, citations, code, and even solutions to math questions. 
-                    For students, each feature can supercharge productivity in a unique way, and, for programmers, coding and debugging is made seemless.    
+                    For students, each feature can supercharge productivity in a unique way, and, for programmers, coding and debugging are made seemless.    
                 </h1>
             </div>
             <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
@@ -31,7 +31,7 @@ export default function About({setFeature}) {
             <div className='border rounded-md bg-white px-5 py-5'>
                 <h1 className='font-semibold'>
                     All features of <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> are
-                    accessed with <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Add")}> Credits</button>. You are given 50 credits for free when you first sign in. Free-tier users have their credits set back to 50 on the first of every month. If you need more, you can purchase <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Add")}> Credits</button> from a variety of pricing options.
+                    accessed with <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Add")}> Credits</button>. You are given 150 credits for free when you first sign in. If you have less than 25 credits, all users get 25 credits free of charge on the first of every month. If you need more, you can purchase <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Add")}> Credits</button> from a variety of pricing options.
                 </h1>
             </div>
             <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
@@ -40,39 +40,39 @@ export default function About({setFeature}) {
             </div>
             <div className='border rounded-md bg-white px-5 py-5'>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Ask")}> Ask</button> provides 
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Ask")}> Ask</button> provides 
                     customizable answers to any questions you might have. This feature is the most dynamic, as you can have <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> generate problems for you, explain concepts to you, 
                     and give you suggestions on how to improve you writing. You can use this feature for anything and everything!
                 </h1>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Cite")}> Cite</button> gives MLA and APA citations
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Cite")}> Cite</button> gives MLA and APA citations
                     for books, articles, and anything else you might enter. As long as the material was created before 2022, <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> citations
                     will attempt to fill in missing information for you, so you can save time working on your bibliography.
                 </h1>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Code")}> Code</button> generates programs for you
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Code")}> Code</button> generates programs for you
                     in a wide variety of languages, libraries, frameworks. Simply describe what you would like programmed, and the code is returned to you. If you are an experienced programmer and want to learn a new language or framework, skip the documentation and describe what you need to code. If you are learning to program, feel free to ask for code explanations. Some of <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> itself was
                     built with this feature.
                 </h1>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Debug")}> Debug</button> helps you fix your code. 
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Debug")}> Debug</button> helps you fix your code. 
                     No need to stare at the console or rummage around Google and Stack Exchange for the solution when you have <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span>. Just paste the error
                     and <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> will give you a human-readable fix!
                 </h1>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Math")}> Math</button> crunches out solutions to math-based problems and questions.
-                    This feature can show you how to solve most problems and provide a reference to theorems and equations. Please check out our full  <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => navigate("/mathguide")}> Math Guide </button> to learn how to get the most out of this feature!
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Math")}> Math</button> crunches out solutions to math-based problems and questions.
+                    This feature can show you how to solve most problems and provide a reference to theorems and equations. Please check out our full  <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => navigate("/mathguide")}> Math Guide </button> to learn how to get the most out of this feature!
                 </h1>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Summarize")}> Summarize</button> provides customizable synopses of 
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Summarize")}> Summarize</button> provides customizable synopses of 
                     books. You can choose the length and creativity of the response to meet your goals and interests!
                 </h1>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("TLDR")}> TLDR</button> stands for Too Long, Didn't Read. Just paste in a big block of text, 
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("TLDR")}> TLDR</button> stands for Too Long, Didn't Read. Just paste in a big block of text, 
                     and <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> will summarize the text for you in a style of your choice: either a paragraph or bullet points.
                 </h1>
                 <h1 className='font-semibold'>
-                    <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Write")}> Write</button> is a powerful writing tool for jumpstarting your first draft and beating
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Write")}> Write</button> is a powerful writing tool for jumpstarting your first draft and beating
                     writer's block. Just describe what you would like written, and <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> takes care of the rest.
                 </h1>
             </div>
@@ -91,7 +91,7 @@ export default function About({setFeature}) {
             </div>
             <div className='flex justify-center items-center border rounded-md bg-white px-5 py-5'>
                 <h1 className='font-semibold justify-center items-center'>
-                    Head to the <button className='font-extrabold text-transparent hover:animate-pulse bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' onClick={() => setFeature("Home")}> Home</button> page!
+                    Head to the <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Home")}> Home</button> page!
                 </h1>
             </div>
             <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
@@ -107,7 +107,7 @@ export default function About({setFeature}) {
                     their amazing work on <a className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900' href='https://openai.com/research/gpt-4'>GPT</a>, we encourage you to read more about them below:
                 </h1>
                 <a href='https://openai.com/'>
-                    <div className='flex flex-row justify-start items-center pt-4 hover:animate-pulse'>
+                    <div className='flex flex-row justify-start items-center pt-4 hover:hover:animate-pulse'>
                         <h1 className='text-xl font-extrabold pr-2'>Open AI</h1>
                         <SiOpenai size={25} />
                     </div>

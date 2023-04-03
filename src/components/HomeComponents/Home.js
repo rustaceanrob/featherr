@@ -9,7 +9,7 @@ import Tile from './Tile'
 
 export default function Home({setFeature}) {
   return (
-    <div className='flex flex-col pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pr-20 pt-10 pb-10'>
+    <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 sm:pr-20 pl-10 pr-10 pt-10 pb-10'>
         <div className='grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 gap-6 pb-5'>
             <Tile feature={"About"} setFeature={setFeature} icon={<BsInfoCircle className='text-blue-700'/>} message={"Learn more about Featherr"}/>
             <Tile feature={"Ask"} setFeature={setFeature} icon={<BsQuestionCircle className='text-blue-700'/>} message={"Ask for help on anything"}/>

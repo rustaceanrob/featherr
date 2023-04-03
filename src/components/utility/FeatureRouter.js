@@ -18,17 +18,17 @@ export default function FeatureRouter({currentFeature, setFeature}) {
             {
                 toggleDrop ? (
                     <div className='absolute top-15 bg-white border rounded-md px-5 py-5 flex flex-col justify-start items-start'>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200' onClick={() => onNavigationClick("Ask")}>Ask</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Cite")}>Cite</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Code")}>Code</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Debug")}>Debug</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Math")}>Math</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Summarize")}>Summarize</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("TLDR")}>TLDR</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2 pb-2 border-b' onClick={() => onNavigationClick("Write")}>Write</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Home")}>Home</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Account")}>Account</button>
-                        <button className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("About")}>About</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200' onClick={() => onNavigationClick("Ask")}>Ask</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Cite")}>Cite</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Code")}>Code</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Debug")}>Debug</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Math")}>Math</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Summarize")}>Summarize</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("TLDR")}>TLDR</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2 pb-2 border-b' onClick={() => onNavigationClick("Write")}>Write</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Home")}>Home</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("Account")}>Account</button>
+                        <button className='font-extrabold text-blue-600 hover:scale-110 duration-200 pt-2' onClick={() => onNavigationClick("About")}>About</button>
                     </div>
                 ) : (
                     <></>

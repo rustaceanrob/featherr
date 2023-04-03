@@ -72,15 +72,6 @@ export default function MainView() {
                             <CiLogout size={16} className='sm:ml-2 ml-1'/>
                         </button>
                         <img className="justify-center items-center img-thumbnail hidden sm:block object-contain h-8 w-8 rounded-3xl ml-5" src={Logo} alt={""}/>
-                        {/* {
-                            user.photoURL ? (
-                                <>
-                                    <img className="img-thumbnail hidden sm:block object-contain h-10 w-10 rounded-3xl ml-5" src={user.photoURL} alt={""}/>
-                                </>
-                            ) : (
-                                <></>
-                            )
-                        } */}  
                     </div>
                 </div>
                 <FeatureRouter currentFeature={feature} setFeature={setFeature}/>

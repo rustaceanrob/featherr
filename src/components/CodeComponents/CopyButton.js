@@ -12,7 +12,7 @@ export default function CopyButton({code}) {
         }
         }
         await navigator.clipboard.writeText(result)
-        alert("Code copied to clipboard!")
+        alert("Copied to clipboard!")
     }
 
     return (

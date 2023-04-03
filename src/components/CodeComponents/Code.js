@@ -21,13 +21,13 @@ export default function Code({credits, setUserCredits}) {
 
           ) : (
           <>
-            <div className='pt-5'>
+            <div className='pt-5 hidden sm:block'>
                 <div className='flex flex-col lg:flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
                   <h1 className='font-extrabold pr-2 text-sm'>Try asking:</h1>
                   <TypeAnimation className='p-0 m-0 pt-2 lg:pt-0 text-sm font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600' 
-                      sequence={['Write an example Express server.', 2000, 
-                                 'Make a functional component in React that represents a form.', 2000, 
-                                 'Write a script to train a CNN in Tensorflow.', 2000]}
+                      sequence={['Make a quick tutorial on TypeScript.', 2000, 
+                                 'Write a function to train a linear regression in python.', 2000,
+                                 'How do I join two tables with Pandas?', 2000]}
                       repeat={Infinity}/>
                 </div>
               </div>

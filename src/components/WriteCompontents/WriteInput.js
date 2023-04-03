@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function WriteInput({draft, credits, setUserCredits, setDraft, setDraftLoading}) {
+export default function WriteInput({credits, setUserCredits, setDraft, setDraftLoading}) {
     const [prompt, setPrompt] = useState("")
-    const [creativity, setCreativity] = useState(0.1)
+    const [userContext, setUserContext] = useState("")
+    const [creativity, setCreativity] = useState(0.3)
     let cost = 10
     const functions = getFunctions()
     const getWriting = httpsCallable(functions, 'getWriting')
@@ -14,7 +15,7 @@ export default function WriteInput({draft, credits, setUserCredits, setDraft, se
         console.log(creativity)
         setDraft("")
         getWriting(
-            { prompt: prompt, temperature: creativity, cost: cost}).then((response) => {
+            { prompt: prompt, userContext: userContext, temperature: creativity, cost: cost}).then((response) => {
                 setDraft(response.data.content.trim())
                 decrementCredits({cost: cost}).then((response) => {
                     setUserCredits(response.data)
@@ -27,10 +28,14 @@ export default function WriteInput({draft, credits, setUserCredits, setDraft, se
 
     return (
         <div>
-            <form className="border rounded-lg px-5 py-5 grid grid-cols-1  gap-2 justify-center items-center" onSubmit={getDraftFromGPT}>
+            <form className="border rounded-lg px-5 py-5 grid grid-cols-1 gap-2 justify-center items-center" onSubmit={getDraftFromGPT}>
+            <div className='flex flex-col justify-center items-start'>
+                    <label className='font-extrabold pb-2'>Context <span className='font-normal'>(Optional)</span></label>
+                    <textarea rows="4" className="w-full font-normal block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" maxlength="2000" value={userContext} placeholder="Is there anything Featherr should know beforehand? i.e. my name is..." onChange={(e) => setUserContext(e.target.value)}/>
+                </div>
                 <div className='flex flex-col justify-center items-start'>
                     <label className='font-extrabold pb-2'>Describe Your Draft</label>
-                    <textarea rows="8" className="w-full font-normal block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" maxlength="2000" value={prompt} placeholder="What would you like drafted?" onChange={(e) => setPrompt(e.target.value)}/>
+                    <textarea rows="2" required className="w-full font-normal block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" maxlength="1000" value={prompt} placeholder="What would you like drafted?" onChange={(e) => setPrompt(e.target.value)}/>
                 </div>
                 <div className='flex flex-col'>
                     <label className='font-extrabold pb-2'>Output Style</label>

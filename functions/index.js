@@ -1,9 +1,6 @@
 const functions = require("firebase-functions");
-const { defineSecret } = require('firebase-functions/params');
 const { Configuration, OpenAIApi } = require("openai");
 const admin = require('firebase-admin');
-const stripeApiKey = defineSecret('firestore-stripe-payments-STRIPE_API_KEY');
-const stripeWhSec = defineSecret('firestore-stripe-payments-STRIPE_WEBHOOK_SECRET');
 admin.initializeApp();
 
 // system messages
@@ -87,23 +84,85 @@ const checkAuthPrecondition = (context) => {
     }
 }
 
-exports.updateCreditsOnSuccess = functions.runWith({ secrets: [stripeApiKey, stripeWhSec] }).https.onRequest(async (req, res) => {
-    const apiKey = "rk_test_51MovlrGjPi5BxZQHGKIFD1DwqZWSHmIzNlxvWvVG9E13WEC3afNTakff3OrYVlk7bUqwslu4STZyfOAmKGGIRQ8N00BsRL9nEa"
-    const whSec = "whsec_DDABKpWfduZ2LT8QVb7PdJCWMa32mfW3"
-    const stripe = require('stripe')("rk_test_51MovlrGjPi5BxZQHGKIFD1DwqZWSHmIzNlxvWvVG9E13WEC3afNTakff3OrYVlk7bUqwslu4STZyfOAmKGGIRQ8N00BsRL9nEa");
+//payments and credits
+exports.resetCredits = functions.pubsub.schedule('1 * 1 * *').timeZone('America/New_York').onRun((context) => {
+    const usersRef = admin.firestore().collection('users');
+    const batch = admin.firestore().batch();
+    return usersRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const user = doc.data();
+        if (user.credits < 25) {
+          const userRef = usersRef.doc(doc.id);
+          batch.set(userRef, { "credits": 25 }); //or update
+        }
+      });
+      return batch.commit();
+    });
+  });
+
+exports.updateCreditsOnSuccess = functions.https.onRequest(async (req, res) => {
+    const apiKey = functions.config().stripe.restrictedkey
+    const whSec = functions.config().stripe.signer
+    const stripe = require('stripe')(apiKey);
     const sig = req.headers['stripe-signature'];
     let event;
-
     try {
         event = stripe.webhooks.constructEvent(req.rawBody, sig, whSec);
-        console.log(event.type)
         if (event.type === "payment_intent.succeeded") {
             const paymentIntent = event.data.object;
-            const meta = paymentIntent.metadata;
-            functions.logger.log(meta)
+            const stripeId = paymentIntent.customer;
+            let limit = 2000
+            let statementDescription = paymentIntent.statement_descriptor;
+            if (!statementDescription) {
+                limit = 10000
+                if (paymentIntent.amount_received === 1000) {
+                    statementDescription = 'FEATHERR SMALL CRED'
+                } else if (paymentIntent.amount_received === 2000) {
+                    statementDescription = 'FEATHERR LARGE CRED'
+                } else {
+                    statementDescription = ''
+                }
+            }
+            const customersRef = admin.firestore().collection('customers'); // costly?
+            const querySnapshot = await customersRef.where('stripeId', '==', stripeId).get();
+            if (querySnapshot.empty) {
+                res.status(404).send('Customer not found. Data out of sync?')
+            } else {
+                const uid = querySnapshot.docs[0].id;
+                const usersRef = admin.firestore().collection("users").doc(uid)
+                let credits = 0;
+                switch (statementDescription) {
+                    case 'FEATHERR LITE PAYMENT':
+                    credits = 200;
+                    break;
+                    case 'FEATHERR BOLD PAYMENT':
+                    credits = 450;
+                    break;
+                    case 'FEATHERR PRO PAYMENT':
+                        limit = 10000;
+                        credits = 1200;
+                    break;
+                    case 'FEATHERR SMALL CRED':
+                    credits = 500;
+                    break;
+                    case 'FEATHERR LARGE CRED':
+                    credits = 1000;
+                    break;
+                    default:
+                    // Handle invalid payment types
+                    break;
+                }
+                usersRef.get().then((docSnapshot) => {
+                    const currentCredits = docSnapshot.data().credits
+                    if (currentCredits > limit)  {
+                        credits = 0 // do not add more credits when greater than 2000
+                    }
+                    usersRef.set({"credits": currentCredits + credits})
+                })
+            }     
         }
     } catch(error) {
-        functions.logger.log("Failure to verify Webhook signature")
+        functions.logger.log("Failure to verify Webhook signature or find customer.")
         functions.logger.log(error)
         return res.sendStatus(400)
     }
@@ -134,8 +193,8 @@ exports.doesNeedUser = functions.https.onCall((data, context) => {
             const credits = docSnapshot.data().credits
             return {credits: credits, page: ""}
         } else {
-            const setCredits = usersRef.set({"credits": 100, "tier": "basic"})
-            return {credits: 100,  page: "About"}  // after credits are set this is necessarily true
+            const setCredits = usersRef.set({"credits": 150})
+            return {credits: 150,  page: "About"}  // after credits are set this is necessarily true
         }
     });
     return info
@@ -336,7 +395,7 @@ exports.getTLDR = functions.runWith({ secrets: ["AI"] }).https.onCall((data, con
     checkCreditPrecondition(context.auth.uid, data.cost)
     let summaryStyling = ""
     if (data.style === "Notes") {
-        summaryStyling = " Please return the summary in a note-taking format."
+        summaryStyling = " Please return the summary in a note-taking format with bullet points."
     }
     const input = data.prompt + '\n\nTl;dr' + summaryStyling;
     const creativity = data.temperature;
@@ -380,7 +439,13 @@ exports.getWriting = functions.runWith({ secrets: ["AI"] }).https.onCall((data, 
     costPrecondition(data.cost)
     checkAuthPrecondition(context)
     checkCreditPrecondition(context.auth.uid, data.cost)
-    const input = data.prompt
+    let userContext;
+    if (data.userContext === "") {
+        userContext = "";
+    } else {
+        userContext = "Here is some contextual information before I ask my question: " + data.userContext + "\n";
+    }
+    const input = userContext + data.prompt
     const temperature = data.creativity
     const configuration = new Configuration({
         apiKey: process.env.AI,

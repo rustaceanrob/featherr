@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { AiFillGithub, AiOutlineWarning, AiOutlineClose } from 'react-icons/ai'
+import { SiFirefoxbrowser, SiGooglechrome, SiMicrosoftedge } from 'react-icons/si'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 import { TypeAnimation } from 'react-type-animation'
@@ -10,7 +11,7 @@ export default function Login() {
     const [message, setMessage] = useState('')
     const [signInError, setSignInError] = useState(false)
     const navigate = useNavigate()
-    const { user, signInWithGooglePopUp } = UserAuth()
+    const { user, signInWithGooglePopUp, signInWithGithubPopUp } = UserAuth()
 
     const handleGoogle = async () => {
         try {
@@ -21,10 +22,23 @@ export default function Login() {
         }                                  
     }
 
+    const handleGithub = async () => {
+        try {
+            await signInWithGithubPopUp()
+            navigate('/')
+        } catch (error) {
+            setSignInError(true)
+        }    
+    }
+
     const navigateToTerms = () => {
         navigate('/terms')
     }
     
+    const navigateToPolicy = () => {
+        navigate('/privatepolicy')
+    }
+
     useEffect(() => {
         if (user) {
             navigate('/')
@@ -51,7 +65,7 @@ export default function Login() {
                 <h3 className='font-extrabold sm:text-2xl text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 pb-5'>{message}</h3>
                 <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600'>Welcome to Featherr.</h1>
             </div>
-            <div className='flex flex-row xl:flex-col justify-center items-center pt-20 pb-5'>
+            <div className='flex flex-row xl:flex-col justify-center items-center sm:pt-10 pt-5 pb-5'>
                 {/* <h1 className='xl:text-5xl sm:leading-relaxed xl:block hidden font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 pb-5'>Let your productivity take flight.</h1> */}
                 <div className='flex flex-row justify-center items-center'>
                     <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 pr-2'>Save time</h1>
@@ -61,21 +75,29 @@ export default function Login() {
                 </div>
             </div>
             <div className='pt-20 lg:pl-40 lg:pr-40 pl-20 pr-20'>
-                <h3 className='text-md flex text-blue-600 justify-center items-center font-bold pb-5'>Please sign in with Google to continue.</h3>
+                <h3 className='sm:text-md text-sm flex text-blue-600 justify-center items-center font-bold pb-5'>Please sign in or sign up with a provider</h3>
                 <div className='grid sm:grid-cols-2 grid-cols-1 sm:gap-4 gap-1 bg-white border rounded justify-between items-center px-5 py-5'>
                     <button onClick={handleGoogle} className='flex flex-row justify-center items-center bg-white px-2 py-2 border rounded-md hover:scale-110 hover:cursor-pointer duration-200'>
                         <h1 className='font-bold pr-2'>Google</h1>
                         <FcGoogle size={20}/>
                     </button>
-                    <div className='flex flex-row justify-center items-center bg-white px-2 py-2 border rounded-md hover:scale-110 hover:cursor-pointer duration-200'>
-                        <h1 className='font-bold pr-2'>GitHub (Soon!)</h1>
+                    <button onClick={handleGithub} className='flex flex-row justify-center items-center bg-white px-2 py-2 border rounded-md hover:scale-110 hover:cursor-pointer duration-200'>
+                        <h1 className='font-bold pr-2'>GitHub</h1>
                         <AiFillGithub className='text-slate-800' size={20}/>
+                    </button>
+                </div>
+                <div className='flex flex-row hidden lg:block'>
+                    <h3 className='text-sm flex text-blue-600 justify-center items-center font-bold pt-5'>Supported Browsers</h3>
+                    <div className='flex flex-row justify-center items-center px-5 py-5'>
+                        <div className='pr-2'><SiGooglechrome className='text-blue-600 ' size={20}/></div>
+                        <div className='pl-2 pr-2'><SiFirefoxbrowser className='text-orange-600' size={20}/></div>
+                        <div className='pl-2'><SiMicrosoftedge className='text-blue-600' size={20}/></div>
                     </div>
                 </div>
-                <h3 className='text-sm flex text-blue-600 justify-center items-center font-bold pt-5'>If this is your first time using Featherr, sign in to get started for free.</h3>
-                <div className='flex flex-col pt-20 justify-center items-center font-normal pt-20 pb-10'>
-                    <h3 className='text-xs flex text-slate-600'>By signing into Featherr, you agree to the </h3> 
-                    <button onClick={navigateToTerms} className='pt-1 pl-1 text-xs flex text-slate-600 font-bold hover:scale-110 duration-200 underline'>Terms of Service.</button>
+                <div className='flex flex-col pt-20 justify-center items-center font-normal sm:pt-10 pt-5 sm:pb-10 pb-2'>
+                    <h3 className='text-xs flex text-slate-600'>By signing into Featherr, you agree to the: </h3> 
+                    <button onClick={navigateToTerms} className='pt-1 pl-1 text-xs flex text-slate-600 font-bold hover:scale-110 duration-200 underline'>Terms of Service</button>
+                    <button onClick={navigateToPolicy} className='pt-1 pl-1 text-xs flex text-slate-600 font-bold hover:scale-110 duration-200 underline'>Private Policy</button>
                 </div>
             </div>
             {
@@ -85,7 +107,7 @@ export default function Login() {
                             <div className='bg-red-300 px-10 py-10 rounded pl-5 pr-5 flex flex-col items-center justify-between'>
                                 <AiOutlineWarning className="flex mb-5" size={20}/>
                                 <h1 className='justify-center items-center font-extrabold text-xl sm:text-2xl'>There was an error logging you in...</h1>
-                                <h1 className='pt-2 font-bold text-sm text-slate-900'>Please try again with a different provider</h1>
+                                <h1 className='pt-2 font-bold text-sm text-slate-900'>Please try again later</h1>
                                 <button onClick={() => setSignInError(!signInError)} className="flex hover:scale-110 duration-200 mt-5" ><AiOutlineClose size={20}/></button>
                             </div>
                         </div>

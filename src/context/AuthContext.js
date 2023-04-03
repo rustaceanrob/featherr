@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { auth, googleProvider } from '../config/firebase'
-import { signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from 'firebase/auth'
+import { auth, googleProvider, githubProvider } from '../config/firebase'
+import { signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from 'firebase/auth'
 
 const UserContext = createContext()
 
@@ -9,8 +9,18 @@ export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState({})
 
     const signInWithGooglePopUp = () => {
-        setPersistence(auth, browserSessionPersistence).then(() => {
+        setPersistence(auth, browserLocalPersistence).then(() => {
             return signInWithPopup(auth, googleProvider)
+        }).catch(() => {
+            throw new Error('Invalid sign-in credentials');
+        })
+    }
+
+    const signInWithGithubPopUp = () => {
+        setPersistence(auth, browserLocalPersistence).then(() => {
+            return signInWithPopup(auth, githubProvider)
+        }).catch(() => {
+            throw new Error('Invalid sign-in credentials');
         })
     }
 
@@ -28,7 +38,7 @@ export const AuthContextProvider = ({ children }) => {
       }, [])
 
     return (
-        <UserContext.Provider value={{user, signInWithGooglePopUp, logOut}}>
+        <UserContext.Provider value={{user, signInWithGooglePopUp, signInWithGithubPopUp, logOut}}>
             {children}
         </UserContext.Provider>
     )

@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { GrStatusGood } from 'react-icons/gr'
 import { AiOutlineDislike } from 'react-icons/ai'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
 export default function Feedback() {
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(true)
     const functions = getFunctions()
     const giveFeedback = httpsCallable(functions, 'giveFeedback')
-
-    useEffect(() => {
-        setShow(true)
-    }, [show])
-
     
     const handleFeedback = (isGood) => {
         giveFeedback({indicator: isGood}).then().catch()

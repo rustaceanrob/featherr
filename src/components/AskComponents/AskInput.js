@@ -45,7 +45,7 @@ export default function AskInput({answer, credits, setAnswer, setUserCredits, se
             setGiveDetail("")
         }
         if (option === "long") {
-            setCost(3)
+            setCost(2)
             setPromptLength(1000)
             setGiveDetail(" Please give as much detail as possible.")
         }
@@ -84,7 +84,7 @@ export default function AskInput({answer, credits, setAnswer, setUserCredits, se
                     <div className='flex flex-col xl:col-span-2'>
                         <div className='flex flex-col row-span-2 justify-center items-start pt-2'>
                             <label className='font-extrabold pb-2'>Question</label>
-                            <textarea className="w-full block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" value={question} rows="5" required maxlength="2000" placeholder="What can Featherr help with?" onChange={(e) => setQuestion(e.target.value)}/>
+                            <textarea className="w-full block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" value={question} rows="3" required maxlength="2000" placeholder="What can Featherr help with?" onChange={(e) => setQuestion(e.target.value)}/>
                         </div>
                         <div className='flex flex-col row-span-2 justify-center items-start pt-2'>            
                             <label className='font-extrabold pb-2 pr-2'>Ask</label>

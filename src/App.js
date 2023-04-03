@@ -7,6 +7,7 @@ import LatexTable from './components/LatexTable';
 import ProtectedRoute from './components/utility/ProtectedRoute';
 import { AuthContextProvider } from './context/AuthContext';
 import { Routes, Route } from 'react-router-dom';
+import PrivatePolicy from './components/PrivatePolicy';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             </ProtectedRoute>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/terms' element={<Terms/>}/>
+          <Route path='/privatepolicy' element={<PrivatePolicy/>}/>
           <Route path='/mathguide' element={<MathGuide/>}/>
           <Route path='/latextable' element={<LatexTable/>}/>
         </Routes>

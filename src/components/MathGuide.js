@@ -99,6 +99,22 @@ export default function MathGuide() {
                 </div>
                 {/* example */}
                 <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
+                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Example</h1>
+                </div>
+                <div className='flex flex-col pt-2 pb-2'>
+                                        <div className='flex flex-col jusitfy-center items-center border rounded-md bg-white px-10 py-5 bg-white'>
+                                            <div className='flex flex-row justify-center items-center'>
+                                                <h1 className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 pr-2'>Your Input:</h1>
+                                                <h1>$</h1>
+                                                <h1 className='font-bold'>x^2 + e^x + \cos(x)</h1>
+                                                <h1>$</h1>
+                                            </div>
+                                            <div className='flex flex-row justify-center items-center'>
+                                                <LaTeXExpression text={"x^2 + e^x + \\cos(x)"}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
                     <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX Quick Start</h1>
                 </div>
                 <div className='border rounded-md bg-white px-5 py-5 bg-white'>
@@ -134,7 +150,7 @@ export default function MathGuide() {
                 </div>
                 <div className='border rounded-md bg-white px-5 py-5 bg-white'>
                     <h1 className='font-semibold'>
-                        Check out the <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 hover:animate-pulse'><button onClick={() => navigate('/latextable')}>LaTeX Table</button></span>!
+                        Check out the <span className='font-extrabold text-blue-600 hover:animate-pulse'><button onClick={() => navigate('/latextable')}>LaTeX Table</button></span>!
                     </h1>
                 </div>
                 <div className='flex flex-row jusify-center items-center pt-5 pb-5'>

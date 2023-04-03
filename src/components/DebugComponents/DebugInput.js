@@ -3,7 +3,7 @@ import { getFunctions, httpsCallable } from "firebase/functions"
 
 export default function DebugInput({credits, setUserCredits, setDebug, setDebugLoading}) {
     const [prompt, setPrompt] = useState("")
-    const cost = 2
+    const cost = 1
     const functions = getFunctions()
     const getDebug = httpsCallable(functions, 'getDebug')
     const decrementCredits = httpsCallable(functions, 'decrementCredits')     

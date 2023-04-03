@@ -40,8 +40,8 @@ export default function MathView({credits, setUserCredits}) {
           <>
             <div className='pt-5 justify-center items-center' >
               <div className='flex flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
-                <h1 className='font-extrabold pr-2 text-sm'>Not sure where to start? Check out the <span className='font-extrabold hover:animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'><button onClick={() => handleOpen("mathguide")}>Math Guide</button></span>. 
-                Looking for a LaTeX command? Check out the <span className='font-extrabold hover:animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'><button onClick={() => handleOpen("latextable")}>LaTeX Table</button></span>. </h1>
+                <h1 className='font-extrabold pr-2 text-sm'>Not sure where to start? Check out the <span className='font-extrabold hover:animate-pulse text-blue-600'><button onClick={() => handleOpen("mathguide")}>Math Guide</button></span>. 
+                Looking for a LaTeX command? Check out the <span className='font-extrabold hover:animate-pulse text-blue-600'><button onClick={() => handleOpen("latextable")}>LaTeX Table</button></span>. </h1>
                 <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-amber-900'></span>
               </div>
             </div>

@@ -8,7 +8,7 @@ export default function Ask({credits, setUserCredits}) {
     const [answer, setAnswer] = useState()
     const [answerLoading, setAnswerLoading] = useState(false)
     return (
-      <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-60 md:pr-60 sm:pr-20 pl-5 pr-5 pt-5'>
+      <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 sm:pr-20 pl-5 pr-5 pt-5'>
         <AskInput answer={answer} credits={credits} setUserCredits={setUserCredits} setAnswer={setAnswer} setAnswerLoading={setAnswerLoading}/>
         { answer ? (
           <div>
@@ -19,7 +19,7 @@ export default function Ask({credits, setUserCredits}) {
           </div>
           ) : (
           <>
-              <div className='pt-5'>
+              <div className='pt-5 hidden lg:block'>
                 <div className='flex flex-col lg:flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
                   <h1 className='font-extrabold pr-2 text-sm'>Try asking:</h1>
                   <TypeAnimation className='p-0 m-0 pt-2 lg:pt-0 text-sm font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600' 

@@ -22,7 +22,7 @@ export default function WriteComponent({credits, setUserCredits}) {
           </div>
           ) : (
           <>
-            <div className='pt-5'>
+            <div className='pt-5 hidden lg:block'>
                 <div className='flex flex-col lg:flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
                 <h1 className='font-extrabold pr-2 text-sm'>Try asking:</h1>
                 <TypeAnimation className='p-0 m-0 pt-2 lg:pt-0 text-sm font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600' 

@@ -19,7 +19,7 @@ export default function TLDR({credits, setUserCredits}) {
           </div>
           ) : (
           <>
-            <div className='pt-5 justify-center items-center' >
+            <div className='pt-5 justify-center items-center hidden lg:block' >
               <div className='flex flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
                 <h1 className='font-extrabold pr-2 text-sm'><span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Tip</span>: You can highlight all the text on a page with <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>CTRL (or Command) + A</span> and 
                 you can copy it with <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>CTRL (or Command) + C</span>.</h1>

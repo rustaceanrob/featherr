@@ -47,6 +47,7 @@ const mathSystemMessage = "You are a mathematics assistant that provides detaile
                             "- List all the steps required to solve the problem. " + 
                             "- Quickly remark on any theorems, equations, constants, or facts used to solve the problem. " + 
                             "- Provide all necessary calculations or proofs required to solve the problem. " + 
+                            "- If the question involves money, say dollars instead of using the dollar symbol. " +
                             "- Provide the solution in LaTeX format. Use '$' for the inline LaTeX delimiter and '$$' for the block LaTeX delimiter. " + //
                             "- Do not add any additional prose."
 
@@ -111,18 +112,8 @@ exports.updateCreditsOnSuccess = functions.https.onRequest(async (req, res) => {
         if (event.type === "payment_intent.succeeded") {
             const paymentIntent = event.data.object;
             const stripeId = paymentIntent.customer;
-            let limit = 2000
-            let statementDescription = paymentIntent.statement_descriptor;
-            if (!statementDescription) {
-                limit = 10000
-                if (paymentIntent.amount_received === 1000) {
-                    statementDescription = 'FEATHERR SMALL CRED'
-                } else if (paymentIntent.amount_received === 2000) {
-                    statementDescription = 'FEATHERR LARGE CRED'
-                } else {
-                    statementDescription = ''
-                }
-            }
+            let limit = 1000
+            let credits = 10
             const customersRef = admin.firestore().collection('customers'); // costly?
             const querySnapshot = await customersRef.where('stripeId', '==', stripeId).get();
             if (querySnapshot.empty) {
@@ -130,32 +121,11 @@ exports.updateCreditsOnSuccess = functions.https.onRequest(async (req, res) => {
             } else {
                 const uid = querySnapshot.docs[0].id;
                 const usersRef = admin.firestore().collection("users").doc(uid)
-                let credits = 0;
-                switch (statementDescription) {
-                    case 'FEATHERR LITE PAYMENT':
-                    credits = 200;
-                    break;
-                    case 'FEATHERR BOLD PAYMENT':
-                    credits = 450;
-                    break;
-                    case 'FEATHERR PRO PAYMENT':
-                        limit = 10000;
-                        credits = 1200;
-                    break;
-                    case 'FEATHERR SMALL CRED':
-                    credits = 500;
-                    break;
-                    case 'FEATHERR LARGE CRED':
-                    credits = 1000;
-                    break;
-                    default:
-                    // Handle invalid payment types
-                    break;
-                }
+
                 usersRef.get().then((docSnapshot) => {
                     const currentCredits = docSnapshot.data().credits
                     if (currentCredits > limit)  {
-                        credits = 0 // do not add more credits when greater than 2000
+                        credits = 0 // do not add more credits when greater than 1000
                     }
                     usersRef.set({"credits": currentCredits + credits})
                 })
@@ -169,20 +139,29 @@ exports.updateCreditsOnSuccess = functions.https.onRequest(async (req, res) => {
     res.sendStatus(200);
   });
 
-exports.decrementCredits = functions.https.onCall((data, context) => {
+exports.decrementCredits = functions.https.onCall(async (data, context) => {
     checkAuthPrecondition(context)
-    const usersRef = admin.firestore().collection("users").doc(context.auth.uid)
-    const credits = usersRef.get().then((docSnapshot) => {
-        if (docSnapshot.exists) {
-            const currentCredits = docSnapshot.data().credits
-            const newCredits = usersRef.set({"credits": currentCredits - data.cost})
-            return currentCredits - data.cost
-        } else {
-            throw new functions.https.HttpsError('failed-condition', 'The function must be called ' +
-                                                                            'by a registered user.');
-        }
-    });
-    return credits
+    const uid = context.auth.uid;
+    const userRef = admin.firestore().collection('users').doc(uid);
+    const customerRef = admin.firestore().collection('customers').doc(uid).collection('subscriptions');
+  
+    let credits = 0;
+  
+    // Get all active subscriptions
+    const activeSubscriptions = await customerRef.where('status', '==', 'active').get();
+  
+    // If there are active subscriptions, don't subtract credits
+    if (!activeSubscriptions.empty) {
+      const userDoc = await userRef.get();
+      credits = userDoc.data().credits;
+    } else {
+      // Subtract credits if there are no active subscriptions
+      const userDoc = await userRef.get();
+      credits = userDoc.data().credits - data.cost;
+      await userRef.update({ credits: credits });
+    }
+  
+    return credits;
 })
 
 exports.doesNeedUser = functions.https.onCall((data, context) => {
@@ -203,8 +182,10 @@ exports.doesNeedUser = functions.https.onCall((data, context) => {
 
 exports.giveFeedback = functions.https.onCall((data, context) => {
     checkAuthPrecondition(context)
+    const prompt = data.prompt
+    const solution = data.solution
     const feedback = data.indicator
-    const newDoc = admin.firestore().collection("feedback").doc().set({"feedback": feedback})
+    const newDoc = admin.firestore().collection("feedback").doc().set({"prompt": prompt, "solution":solution, "feedback": feedback})
 })
 
 // Open AI calls

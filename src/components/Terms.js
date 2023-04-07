@@ -14,7 +14,7 @@ export default function Terms() {
                 <h1 className='flex pt-5 font-bold text-gray-900'>5. By using the AI assistant, you agree that we may collect and analyze data and information about how you use the application. We will use this information to improve our services and provide better customer support.</h1>
                 <h1 className='flex pt-5 font-bold text-gray-900'>6. Your access to the AI assistant may be terminated at any time for any reason.</h1>
                 <h1 className='flex pt-5 font-bold text-gray-900'>7. This agreement is governed by the laws of the United States of America and any dispute will be resolved in a court of law.</h1>
-                <h1 className='flex pt-5 font-bold text-gray-900 pb-5'>By using our Featherr, you acknowledge and agree to these terms of service.</h1>
+                <h1 className='flex pt-5 font-bold text-gray-900 pb-5'>By using Featherr, you acknowledge and agree to these terms of service.</h1>
             </div>
             <div className='absolute top-0 left-0 w-full h-screen bg-gray-100 z-[-1]'></div>
         </div>

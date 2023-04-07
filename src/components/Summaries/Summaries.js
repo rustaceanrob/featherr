@@ -3,7 +3,7 @@ import BookForm from './InputForms/BookForm'
 import { BsInfoCircle } from 'react-icons/bs'
 import Summary from './Summary'
 import Loading from '../utility/Loading'
-export default function Summaries({credits, setUserCredits}) {
+export default function Summaries({tier, credits, setUserCredits}) {
     const [ summary, setSummary] = useState()
     const [summaryLoading, setSummaryLoading] = useState(false)
     const [showWarn, setShowWarn] = useState(true)
@@ -34,7 +34,7 @@ export default function Summaries({credits, setUserCredits}) {
 
             {/* switch statement / element for unique forms and warning */}        
 
-            <BookForm summary={summary} credits={credits} setUserCredits={setUserCredits} setSummary={setSummary} setSummaryLoading={setSummaryLoading}/>
+            <BookForm tier={tier} summary={summary} credits={credits} setUserCredits={setUserCredits} setSummary={setSummary} setSummaryLoading={setSummaryLoading}/>
 
             {/* summary display */}
             

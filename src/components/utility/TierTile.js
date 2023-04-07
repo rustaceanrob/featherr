@@ -31,7 +31,7 @@ export default function TierTile({tier, price, stripeId, description, fontStyle,
         }
     }
     return (
-        <div className={`flex flex-col justify-center px-5 py-5 bg-gradient-to-b from-white to-slate-200 border rounded-md shadow-xl ${hover}`} onClick={() => handleCheckout(stripeId)}>
+        <div className={`flex flex-col justify-start px-5 py-5 bg-gradient-to-b from-white to-slate-200 border rounded-md shadow-xl ${hover}`} onClick={() => handleCheckout(stripeId)}>
             <div className='flex flex-row justify-between items-start pl-2 pr-2'>
                 <h1 className={`${headerStyle} font-extrabold `}>{tier} Plan</h1>
                 <h1 className='text-slate-800 font-bold'>{price}</h1>
@@ -44,7 +44,7 @@ export default function TierTile({tier, price, stripeId, description, fontStyle,
                   perks.map(item => {
                     return (
                     <div key={item} className="flex flex-row justify-start items-center pb-4">
-                      <BsFillCheckCircleFill size={20} className='text-green-400 hidden sm:block'/>
+                      <BsFillCheckCircleFill size={20} className='text-green-400'/>
                       <h1 className='pl-2 md:pl-4 font-bold'>{item}</h1>
                     </div> )
                   })

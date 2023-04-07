@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { MathJax } from 'better-react-mathjax'
 import { getFunctions, httpsCallable } from "firebase/functions"
+import MathButton from './MathButton'
 
-export default function MathInput({solution, credits, setUserCredits, setSolution, setSolutionLoading}) {
-    const [prompt, setPrompt] = useState(``)
+export default function MathInput({tier, credits, prompt, setPrompt, setUserCredits, setSolution, setSolutionLoading}) {
     const cost = 5
+    const expressions = ["\\div", "\\times", "\\frac{1}{2}", "x", "y", "x^2", "\\leq", "\\geq", "\\neq","\\approx", 
+                            "e^x", "\\ln", "\\sin(x)", "\\cos(x)", "\\tan(x)", "\\pi", "\\alpha", "\\beta", "\\delta",
+                             "\\sigma", "\\mathbb{E}(X)", "\\bar{x}", "\\binom{k}{1}", "\\frac{d}{dx}", "\\int", "dx", 
+                             "\\lim_{x \\to a}", "\\sum_{i=1}^n", "A^\\intercal", "A^{-1}"]
     const functions = getFunctions()
     const getMath = httpsCallable(functions, 'getMath')
     const decrementCredits = httpsCallable(functions, 'decrementCredits')    
@@ -37,9 +41,19 @@ export default function MathInput({solution, credits, setUserCredits, setSolutio
                         <MathJax inline dynamic>{prompt}</MathJax>
                     </div>
                 </div>
+                <div className='flex flex-col justify-center items-start'>
+                    <label className='font-extrabold pb-2'>Quick Add</label>
+                    <div className='grid xl:grid-cols-10 grid-cols-4 md:grid-cols-6 gap-1 w-full border-slate-100 rounded-md shadow-sm bg-white px-5 py-5'>
+                    {
+                        expressions.map((expression) => {
+                            return <MathButton prompt={prompt} setPrompt={setPrompt} expression={expression}/>
+                        })
+                    }
+                    </div>
+                </div>
                 <div className='flex flex-col justify-center items-start pt-2 pb-2'>            
                     <label className='font-extrabold pb-2 pr-2'>Solve</label>
-                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credits"}/>
+                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={tier === "Basic" ? cost + " Credits": "Go!"}/>
                 </div>
                 {
                     credits - cost < 0 ? (

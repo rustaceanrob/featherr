@@ -3,13 +3,13 @@ import { GrStatusGood } from 'react-icons/gr'
 import { AiOutlineDislike } from 'react-icons/ai'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function Feedback() {
+export default function Feedback({prompt, solution}) {
     const [show, setShow] = useState(true)
     const functions = getFunctions()
     const giveFeedback = httpsCallable(functions, 'giveFeedback')
     
     const handleFeedback = (isGood) => {
-        giveFeedback({indicator: isGood}).then().catch()
+        giveFeedback({prompt: prompt, solution: solution, indicator: isGood}).then().catch()
         setShow(false)
     }
 

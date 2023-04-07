@@ -31,6 +31,10 @@ export default function Login() {
         }    
     }
 
+    const navigateToLanding = () => {
+        navigate('/landing')
+    }
+
     const navigateToTerms = () => {
         navigate('/terms')
     }
@@ -66,7 +70,6 @@ export default function Login() {
                 <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600'>Welcome to Featherr.</h1>
             </div>
             <div className='flex flex-row xl:flex-col justify-center items-center sm:pt-10 pt-5 pb-5'>
-                {/* <h1 className='xl:text-5xl sm:leading-relaxed xl:block hidden font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 pb-5'>Let your productivity take flight.</h1> */}
                 <div className='flex flex-row justify-center items-center'>
                     <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 pr-2'>Save time</h1>
                     <TypeAnimation className='sm:text-5xl text-3xl p-0 m-0 font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600' 
@@ -74,8 +77,8 @@ export default function Login() {
                         repeat={Infinity}/>
                 </div>
             </div>
-            <div className='pt-20 lg:pl-40 lg:pr-40 pl-20 pr-20'>
-                <h3 className='sm:text-md text-sm flex text-blue-600 justify-center items-center font-bold pb-5'>Please sign in or sign up with a provider</h3>
+            <div className='pt-10 lg:pl-40 lg:pr-40 pl-20 pr-20'>
+                <h3 className='sm:text-md text-sm flex text-blue-600 justify-center items-center font-bold pb-5'>Please sign in or sign up</h3>
                 <div className='grid sm:grid-cols-2 grid-cols-1 sm:gap-4 gap-1 bg-white border rounded justify-between items-center px-5 py-5'>
                     <button onClick={handleGoogle} className='flex flex-row justify-center items-center bg-white px-2 py-2 border rounded-md hover:scale-110 hover:cursor-pointer duration-200'>
                         <h1 className='font-bold pr-2'>Google</h1>
@@ -86,8 +89,11 @@ export default function Login() {
                         <AiFillGithub className='text-slate-800' size={20}/>
                     </button>
                 </div>
+                <div className='flex justify-center items-center pt-5'>
+                    <button onClick={navigateToLanding} className='text-sm font-bold text-blue-600 justify-center items-center hover:animate-pulse hover:scale-110 duration-200'>New here? Learn more</button> 
+                </div>
                 <div className='flex flex-row hidden lg:block'>
-                    <h3 className='text-sm flex text-blue-600 justify-center items-center font-bold pt-5'>Supported Browsers</h3>
+                    <h3 className='text-xs flex text-blue-600 justify-center items-center font-bold pt-5'>Supported Browsers</h3>
                     <div className='flex flex-row justify-center items-center px-5 py-5'>
                         <div className='pr-2'><SiGooglechrome className='text-blue-600 ' size={20}/></div>
                         <div className='pl-2 pr-2'><SiFirefoxbrowser className='text-orange-600' size={20}/></div>

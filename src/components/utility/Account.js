@@ -13,12 +13,10 @@ export default function Account({user, credits, setFeature}) {
     const functions = getFunctions()
     const createPortal = httpsCallable(functions, 'ext-firestore-stripe-payments-createPortalLink')
 
-
     const getTier = async () => {
         const q = collection(db, 'customers', user.uid, 'subscriptions')
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach(async (doc) => {
-            console.log(doc.data())
             setTier(doc.data().role)
             setNextPayment(doc.data().current_period_end.seconds)
             setSubStatus(doc.data().status)

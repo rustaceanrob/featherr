@@ -3,7 +3,7 @@ import { getFunctions, httpsCallable } from "firebase/functions"
 import { toWords } from 'number-to-words'
 import { CiSettings } from 'react-icons/ci'
 
-export default function BookForm({summary, credits, setUserCredits, setSummary, setSummaryLoading}) {
+export default function BookForm({tier, credits, setUserCredits, setSummary, setSummaryLoading}) {
     const [book, setBook] = useState("")
     const [author, setAuthor] = useState("")
     let chapter = ""
@@ -79,7 +79,7 @@ export default function BookForm({summary, credits, setUserCredits, setSummary, 
                     </div>
                     <div className='flex flex-col justify-center items-start lg:pt-0'>            
                         <label className='font-extrabold pb-2 pr-2 col-span-2 md:col-span-1'>Summarize</label>
-                        <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit(s)"}/>
+                        <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={tier === "Basic" ? cost + " Credits": "Go!"}/>
                     </div>
                 </form>
                 <div className='flex pt-5 justify-center items-center pb-5'>

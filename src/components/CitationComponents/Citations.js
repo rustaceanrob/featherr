@@ -3,13 +3,13 @@ import Loading from '../utility/Loading'
 import Citation from './Citation'
 import CitationInput from './CitationInput'
 
-export default function Citations({credits, setUserCredits}) {
+export default function Citations({tier, credits, setUserCredits}) {
     const [citation, setCitation] = useState()
     const [citationLoading, setCitationLoading] = useState(false)
     
     return (
       <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 sm:pr-20 pl-5 pr-5 pt-5'>
-        <CitationInput credits={credits} setUserCredits={setUserCredits} setCitation={setCitation} setCitationLoading={setCitationLoading}/>
+        <CitationInput tier={tier} credits={credits} setUserCredits={setUserCredits} setCitation={setCitation} setCitationLoading={setCitationLoading}/>
         { citation ? (
           <div>
                 <div className='pt-5 pb-2'>

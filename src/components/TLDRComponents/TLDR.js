@@ -3,13 +3,13 @@ import Loading from '../utility/Loading'
 import Summary from '../Summaries/Summary'
 import TLDRInput from './TLDRInput'
 
-export default function TLDR({credits, setUserCredits}) {
+export default function TLDR({tier, credits, setUserCredits}) {
     const [summary, setSummary] = useState()
     const [summaryLoading, setSummaryLoading] = useState(false)
 
     return (
       <div className='flex flex-col sm:pl-20 sm:pr-20 pl-5 pr-5 lg:pl-60 lg:pr-60 md:pl-20 md:pr-20 pt-5'>
-        <TLDRInput summary={summary} credits={credits} setUserCredits={setUserCredits} setSummary={setSummary} setSummaryLoading={setSummaryLoading}/>
+        <TLDRInput tier={tier} summary={summary} credits={credits} setUserCredits={setUserCredits} setSummary={setSummary} setSummaryLoading={setSummaryLoading}/>
         { summary ? (
           <div>
                 <div className='pt-5 pb-2'>

@@ -3,13 +3,13 @@ import Loading from '../utility/Loading'
 import Summary from '../Summaries/Summary'
 import DebugInput from './DebugInput'
 
-export default function Debug({credits, setUserCredits}) {
+export default function Debug({tier, credits, setUserCredits}) {
     const [debug, setDebug] = useState()
     const [debugLoading, setDebugLoading] = useState(false)
 
     return (
       <div className='flex flex-col sm:pl-20 sm:pr-20 pl-5 pr-5 lg:pl-60 lg:pr-60 md:pl-20 md:pr-20 pt-5'>
-        <DebugInput credits={credits} setDebug={setDebug} setUserCredits={setUserCredits} setDebugLoading={setDebugLoading}/>
+        <DebugInput tier={tier} credits={credits} setDebug={setDebug} setUserCredits={setUserCredits} setDebugLoading={setDebugLoading}/>
         { debug ? (
           <div>
                 <div className='pt-5 pb-2'>

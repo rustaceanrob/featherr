@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function TLDRInput({summary, credits, setUserCredits, setSummary, setSummaryLoading}) {
+export default function TLDRInput({tier, credits, setUserCredits, setSummary, setSummaryLoading}) {
     const [prompt, setPrompt] = useState("")
     const [noteStyle, setNoteStyle] = useState("")
     const [cost, setCost] = useState(1)
@@ -47,7 +47,7 @@ export default function TLDRInput({summary, credits, setUserCredits, setSummary,
                 </div>
                 <div className='flex flex-col justify-center items-start pt-2 pb-2'>            
                     <label className='font-extrabold pb-2 pr-2'>Summarize</label>
-                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credits"}/>
+                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={tier === "Basic" ? cost + " Credits": "Go!"}/>
                 </div>
                 {
                     credits - cost < 0 ? (

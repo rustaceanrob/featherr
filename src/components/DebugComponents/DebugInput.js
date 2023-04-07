@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function DebugInput({credits, setUserCredits, setDebug, setDebugLoading}) {
+export default function DebugInput({tier, credits, setUserCredits, setDebug, setDebugLoading}) {
     const [prompt, setPrompt] = useState("")
     const cost = 1
     const functions = getFunctions()
@@ -32,7 +32,7 @@ export default function DebugInput({credits, setUserCredits, setDebug, setDebugL
                 </div>
                 <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>            
                     <label className='font-extrabold pb-2 pr-2'>Debug</label>
-                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credits"}/>
+                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={tier === "Basic" ? cost + " Credits": "Go!"}/>
                 </div>
                 {
                     credits - cost < 0 ? (

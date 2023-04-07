@@ -31,7 +31,8 @@ export default function About({setFeature}) {
             <div className='border rounded-md bg-white px-5 py-5'>
                 <h1 className='font-semibold'>
                     All features of <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> are
-                    accessed with <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Add")}> Credits</button>. You are given 150 credits for free when you first sign in. If you have less than 25 credits, all users get 25 credits free of charge on the first of every month. If you need more, you can purchase <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Add")}> Credits</button> from a variety of pricing options.
+                    accessed with credits for Basic Tier users. You are given 150 credits for free when you first sign in. If you have less than 25 credits, all users get 25 credits free of charge on the first of every month. 
+                    For unlimited usage, you can purchase a <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Add")}> Subscription</button>.
                 </h1>
             </div>
             <div className='flex flex-row jusify-center items-center pt-5 pb-5'>

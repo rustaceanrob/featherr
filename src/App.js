@@ -4,6 +4,7 @@ import Terms from './components/Terms';
 import MainView from './components/MainView';
 import MathGuide from './components/MathGuide';
 import LatexTable from './components/LatexTable';
+import Landing from './components/Landing';
 import ProtectedRoute from './components/utility/ProtectedRoute';
 import { AuthContextProvider } from './context/AuthContext';
 import { Routes, Route } from 'react-router-dom';
@@ -23,6 +24,7 @@ function App() {
           <Route path='/privatepolicy' element={<PrivatePolicy/>}/>
           <Route path='/mathguide' element={<MathGuide/>}/>
           <Route path='/latextable' element={<LatexTable/>}/>
+          <Route path='/landing' element={<Landing/>}/>
         </Routes>
     </AuthContextProvider>
   );

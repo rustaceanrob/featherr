@@ -3,7 +3,7 @@ import { MathJax } from 'better-react-mathjax'
 import { AiOutlineWarning } from 'react-icons/ai'
 import Feedback from '../utility/Feedback'
 
-export default function Solution({solution, setSolutionLoading}) {
+export default function Solution({prompt, solution, setSolutionLoading}) {
     useEffect(() => {
         setSolutionLoading(false)
     }, [solution, setSolutionLoading])
@@ -24,7 +24,7 @@ export default function Solution({solution, setSolutionLoading}) {
                     </MathJax>
                 </p>
             </div>
-            <Feedback/>
+            <Feedback prompt={prompt} solution={solution}/>
         </div> 
     )
 }

@@ -5,13 +5,13 @@ import WriteInput from './WriteInput'
 import { TypeAnimation } from 'react-type-animation'
 import WriteToolbar from './WriteToolbar'
 
-export default function WriteComponent({credits, setUserCredits}) {
+export default function WriteComponent({tier, credits, setUserCredits}) {
     const [draft, setDraft] = useState()
     const [draftLoading, setDraftLoading] = useState(false)
 
     return (
       <div className='flex flex-col sm:pl-20 sm:pr-20 pl-5 pr-5 lg:pl-60 lg:pr-60 md:pl-40 md:pr-40 pt-5'>
-        <WriteInput draft={draft} credits={credits} setDraft={setDraft} setUserCredits={setUserCredits} setDraftLoading={setDraftLoading}/>
+        <WriteInput tier={tier} draft={draft} credits={credits} setDraft={setDraft} setUserCredits={setUserCredits} setDraftLoading={setDraftLoading}/>
         { draft ? (
           <div>
                 <div className='pt-5 pb-2'>

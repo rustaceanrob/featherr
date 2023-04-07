@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function CitationInput({credits, setUserCredits, setCitation, setCitationLoading}) {
+export default function CitationInput({tier, credits, setUserCredits, setCitation, setCitationLoading}) {
     const [book, setBook] = useState("")
     const [author, setAuthor] = useState("")
     const [media, setMedia] = useState("")
@@ -76,7 +76,7 @@ export default function CitationInput({credits, setUserCredits, setCitation, set
                     </div>
                     <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>            
                         <label className='font-extrabold pb-2 pr-2'>Cite</label>
-                        <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credit(s)"}/>
+                        <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={tier === "Basic" ? cost + " Credits": "Go!"}/>
                     </div>
                     {
                         credits - cost < 0 ? (

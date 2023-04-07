@@ -4,7 +4,8 @@ import Loading from '../utility/Loading'
 import Solution from './Solution'
 import MathInput from './MathInput'
 
-export default function MathView({credits, setUserCredits}) {
+export default function MathView({tier, credits, setUserCredits}) {
+    const [prompt, setPrompt] = useState(``)
     const [solution, setSolution] = useState()
     const [solutionLoading, setSolutionLoading] = useState(false)
     const handleOpen = (page) => {
@@ -28,13 +29,13 @@ export default function MathView({credits, setUserCredits}) {
     return (
       <MathJaxContext version={3} config={mjaxConfig}>
       <div className='flex flex-col lg:pl-60 lg:pr-60 md:pl-20 md:pr-20 sm:pl-20 sm:pr-20 pl-5 pr-5 pt-5'>
-        <MathInput solution={solution} credits={credits} setUserCredits={setUserCredits} setSolution={setSolution} setSolutionLoading={setSolutionLoading}/>
+        <MathInput tier={tier} solution={solution} prompt={prompt} setPrompt={setPrompt} credits={credits} setUserCredits={setUserCredits} setSolution={setSolution} setSolutionLoading={setSolutionLoading}/>
         { solution ? (
           <div>
               <div className='pt-5 pb-2'>
                   <Loading isLoading={solutionLoading} message={"We are working on that solution right now"}/> 
               </div>
-              <Solution solution={solution} setSolutionLoading={setSolutionLoading}/>
+              <Solution prompt={prompt} solution={solution} setSolutionLoading={setSolutionLoading}/>
           </div>
           ) : (
           <>

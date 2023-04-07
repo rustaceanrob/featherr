@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function CodeInput({code, credits, setUserCredits, setCode, setCodeLoading}) {
+export default function CodeInput({tier, credits, setUserCredits, setCode, setCodeLoading}) {
     const [language, setLanguage] = useState("")
     const [prompt, setPrompt] = useState("")
     const [comments, setComments] = useState("None")
@@ -48,7 +48,7 @@ export default function CodeInput({code, credits, setUserCredits, setCode, setCo
                 </div>
                 <div className='flex flex-col justify-center items-start pt-2 pb-2'>            
                     <label className='font-extrabold pb-2 pr-2'>Code</label>
-                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credits"}/>
+                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={tier === "Basic" ? cost + " Credits": "Go!"}/>
                 </div>
                 {
                     credits - cost < 0 ? (

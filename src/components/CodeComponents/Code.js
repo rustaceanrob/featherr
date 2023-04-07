@@ -4,13 +4,13 @@ import CodeBlock from './CodeBlock'
 import CodeInput from './CodeInput'
 import { TypeAnimation } from 'react-type-animation'
 
-export default function Code({credits, setUserCredits}) {
+export default function Code({tier, credits, setUserCredits}) {
     const [code, setCode] = useState()
     const [codeLoading, setCodeLoading] = useState(false)
 
     return (
       <div className='flex flex-col sm:pl-20 lg:pl-60 lg:pr-60 md:pl-20 md:pr-20 sm:pr-20 pl-5 pr-5 pt-5'>
-        <CodeInput code={code} credits={credits} setUserCredits={setUserCredits} setCode={setCode} setCodeLoading={setCodeLoading}/>
+        <CodeInput tier={tier} code={code} credits={credits} setUserCredits={setUserCredits} setCode={setCode} setCodeLoading={setCodeLoading}/>
         { code ? (
           <div>
                 <div className='pt-5 pb-5'>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
-export default function WriteInput({credits, setUserCredits, setDraft, setDraftLoading}) {
+export default function WriteInput({tier, credits, setUserCredits, setDraft, setDraftLoading}) {
     const [prompt, setPrompt] = useState("")
     const [userContext, setUserContext] = useState("")
     const [creativity, setCreativity] = useState(0.3)
-    let cost = 10
+    const cost = 5
     const functions = getFunctions()
     const getWriting = httpsCallable(functions, 'getWriting')
     const decrementCredits = httpsCallable(functions, 'decrementCredits')     
@@ -47,7 +47,7 @@ export default function WriteInput({credits, setUserCredits, setDraft, setDraftL
                 </div>
                 <div className='flex flex-col justify-center items-start pt-2 lg:pt-0'>            
                     <label className='font-extrabold pb-2 pr-2'>Write</label>
-                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={cost + " Credits"}/>
+                    <input disabled={credits - cost < 0} className="w-full font-extrabold border rounded-lg px-2 py-2 hover:bg-gradient-to-r from-amber-400 to-orange-400 hover:animate-pulse duration-200 bg-white" type="submit" value={tier === "Basic" ? cost + " Credits": "Go!"}/>
                 </div>
                 {
                     credits - cost < 0 ? (

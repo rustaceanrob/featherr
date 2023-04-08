@@ -5,10 +5,9 @@ import MathButton from './MathButton'
 
 export default function MathInput({tier, credits, prompt, setPrompt, setUserCredits, setSolution, setSolutionLoading}) {
     const cost = 5
-    const expressions = ["\\div", "\\times", "\\frac{1}{2}", "x", "y", "x^2", "\\leq", "\\geq", "\\neq","\\approx", 
-                            "e^x", "\\ln", "\\sin(x)", "\\cos(x)", "\\tan(x)", "\\pi", "\\alpha", "\\beta", "\\delta",
-                             "\\sigma", "\\mathbb{E}(X)", "\\bar{x}", "\\binom{k}{1}", "\\frac{d}{dx}", "\\int", "dx", 
-                             "\\lim_{x \\to a}", "\\sum_{i=1}^n", "A^\\intercal", "A^{-1}"]
+    const expressions = ["\\div", "\\times", "\\frac{1}{2}", "x", "y", "x^2", "\\sqrt{x}", "x^3", "\\leq", "\\geq", "\\neq","\\approx", 
+                            "e^x", "\\ln", "\\sin(x)", "\\cos(x)", "\\tan(x)", "\\pi", "\\alpha", "\\beta", "\\epsilon",
+                             "\\sigma", "\\mathbb{E}(X)", "\\bar{x}", "\\binom{k}{1}", "\\frac{d}{dx}", "\\int", "dx", "A^\\intercal", "A^{-1}"]
     const functions = getFunctions()
     const getMath = httpsCallable(functions, 'getMath')
     const decrementCredits = httpsCallable(functions, 'decrementCredits')    

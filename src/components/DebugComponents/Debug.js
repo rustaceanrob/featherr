@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Loading from '../utility/Loading'
-import Summary from '../Summaries/Summary'
+import Summary from '../utility/Summary'
 import DebugInput from './DebugInput'
 
 export default function Debug({tier, credits, setUserCredits}) {

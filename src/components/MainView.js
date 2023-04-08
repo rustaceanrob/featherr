@@ -6,17 +6,14 @@ import { CiLogout } from 'react-icons/ci'
 import { MdDownloading } from 'react-icons/md'
 import { GrAddCircle } from 'react-icons/gr'
 import Logo from '../assets/logo2.png'
-import Ask from './AskComponents/Ask'
 import About from './utility/About'
 import Citations from './CitationComponents/Citations'
-import Summaries from './Summaries/Summaries'
 import FeatureRouter from './utility/FeatureRouter'
 import Code from './CodeComponents/Code'
 import Debug from './DebugComponents/Debug'
 import TLDR from './TLDRComponents/TLDR'
 import Home from './HomeComponents/Home'
 import MathView from './MathComponents/MathView'
-import WriteComponent from './WriteCompontents/WriteComponent'
 import AddCreditsPage from './utility/AddCreditsPage'
 import Account from './utility/Account'
 import { db } from '../config/firebase'
@@ -87,7 +84,7 @@ export default function MainView() {
                             )
                         }
                         <div className='pr-2 flex flex-row hidden sm:block justify-center items-center'>
-                            <button className="flex flex-row justify-center items-center rounded border px-2 py-2 bg-gradient-to-r bg-white hover:animate-pulse hover:from-amber-600 hover:to-amber-400 hover:scale-110 duration-200" onClick={() => setFeature("Add")}>
+                            <button className="flex flex-row justify-center items-center rounded border px-2 py-2 bg-gradient-to-r bg-white hover:animate-pulse hover:from-amber-600 hover:to-amber-400 hover:scale-110 duration-200" onClick={() => setFeature("Upgrade")}>
                                 <GrAddCircle className='mr-1 text-amber-200'/>
                                 <span className='text-sm font-bold'>Upgrade</span>
                             </button>
@@ -103,15 +100,12 @@ export default function MainView() {
                 {
                     {
                         'About': <About tier={tier} setFeature={setFeature}/>,
-                        'Summarize': <Summaries tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>,
                         'Code': <Code tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>, 
                         'Debug': <Debug tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>,
                         'Math': <MathView tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>,
                         'Cite': <Citations tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>,
-                        'TLDR': <TLDR tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>,
-                        'Write': <WriteComponent tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>,
-                        'Ask': <Ask credits={userCredits} tier={tier} setUserCredits={setUserCredits}/>,
-                        'Add': <AddCreditsPage/>,
+                        'Summarize': <TLDR tier={tier} credits={userCredits} setUserCredits={setUserCredits}/>,
+                        'Upgrade': <AddCreditsPage/>,
                         'Account': <Account user={user} credits={userCredits} setFeature={setFeature}/>,
                         'Home': <Home setFeature={setFeature}/>
                     } [feature]

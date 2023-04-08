@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CopyButton from './CopyButton'
-import Prism from "prismjs";
-import "../../dracula.css";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-export default function CodeBlock({code, setCodeLoading}) {
+export default function CodeBlock({language, code, setCodeLoading}) {
+    const [styledLang, setStyledLang] = useState("javascript")
     useEffect(() => {
-        Prism.highlightAll()
         setCodeLoading(false)
+        if (language === "C++") {
+            setStyledLang("cpp")
+        } else if (language === "C#") {
+            setStyledLang("csharp")
+        } else if (language === "HTML") {
+            setStyledLang("cshtml")
+        } else {
+            setStyledLang(language.toLowerCase())
+        }
     }, [code])
     
     return (
@@ -27,9 +36,11 @@ export default function CodeBlock({code, setCodeLoading}) {
                         )
                     } else {
                         return (
-                            <pre>
-                                <code className={"lang-js"}>{codes.replace(/#/g, "#//").trim()}</code>
-                            </pre>
+                            <div className='rounded-md border pt-2 pb-2'>
+                                <SyntaxHighlighter className="rounded-md border" language={styledLang} style={a11yDark}>
+                                    {codes.trim()}
+                                </SyntaxHighlighter>
+                            </div>
                         )
                     }
                 })}

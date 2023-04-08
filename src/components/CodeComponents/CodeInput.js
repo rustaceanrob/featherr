@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { getFunctions, httpsCallable } from "firebase/functions"
+import CodeButton from './CodeButton'
 
-export default function CodeInput({tier, credits, setUserCredits, setCode, setCodeLoading}) {
-    const [language, setLanguage] = useState("")
+export default function CodeInput({tier, credits, setUserCredits, setCode, setCodeLoading, language, setLanguage}) {
+    const languages = ["Python", "Java", "JavaScript", "C#" , "PHP", "C++", "Ruby", "HTML", "CSS", "SQL"]
     const [prompt, setPrompt] = useState("")
     const [comments, setComments] = useState("None")
     const cost = 5
@@ -32,8 +33,18 @@ export default function CodeInput({tier, credits, setUserCredits, setCode, setCo
         <div>
             <form className="border rounded-lg px-5 py-5 grid grid-cols-1  gap-2 justify-center items-center" onSubmit={getCode}>
                 <div className='flex flex-col justify-center items-start'>
-                    <label className='font-extrabold pb-2'>Programming language or framework</label>
-                    <input className="w-full  block px-2 py-2 border-slate-100 rounded-md shadow-sm focus:outline-none" type="text" value={language} placeholder="What are you coding in?" maxlength="100" required onChange={(e) => setLanguage(e.target.value)}/>
+                    <label className='font-extrabold pb-2'>Programming language: <span className='text-blue-700'>{language}</span></label>
+                    <div className='grid grid-cols-3 md:grid-cols-5 gap-1 pt-2 pb-2 border-t w-full'>
+                    {
+                        languages.map((lang) => {
+                            return (
+                                <div>
+                                    <CodeButton language={lang} setLanguage={setLanguage}/>
+                                </div>
+                            )
+                        })
+                    }
+                    </div>
                 </div>
                 <div className='flex flex-col justify-center items-start'>
                     <label className='font-extrabold pb-2'>What you would like to be programmed?</label>

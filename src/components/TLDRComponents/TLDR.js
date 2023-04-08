@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Loading from '../utility/Loading'
-import Summary from '../Summaries/Summary'
+import Summary from '../utility/Summary'
 import TLDRInput from './TLDRInput'
 
 export default function TLDR({tier, credits, setUserCredits}) {

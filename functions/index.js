@@ -189,44 +189,44 @@ exports.giveFeedback = functions.https.onCall((data, context) => {
 })
 
 // Open AI calls
-exports.getChapterByTitleAndAuthor = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    costPrecondition(data.cost)
-    checkAuthPrecondition(context)
-    checkCreditPrecondition(context.auth.uid, data.cost)
-    let prompt;
-    if (data.chapter === "") {
-        prompt = `Please summarize ${data.title} by ${data.author}.`; 
-    } else {
-        prompt = `Please summarize Chapter ${data.chapter} of ${data.title} by ${data.author}.`; 
-    }
-    let specification;
-    if (data.subject === 'technical') {
-        specification = ' Can you please give the technical details of the important points.';
-    } else if (data.subject === 'character') {
-        specification = ' Can you please give the details of character development.';
-    } else if (data.subject === 'growth') {
-        specification = ' Can you please give the main takeaways and action items.';
-    } else {
-        specification = ' Can you please give as much detail as possible.';
-    }
-    const input = prompt + specification;
-    const promptLength = data.promptLength;
-    const temperature = data.temperature;
-    const configuration = new Configuration({
-        apiKey: process.env.AI,
-    });
-    const openai = new OpenAIApi(configuration);
-    const aiRes = openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{"role": "system", "content": summarySystemMessage}, 
-                   {"role": "user", "content": input}], 
-        temperature: temperature,
-        max_tokens: promptLength,
-    }).then((response) => {
-        return response.data.choices[0].message;
-    })
-    return aiRes
-})
+// exports.getChapterByTitleAndAuthor = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
+//     costPrecondition(data.cost)
+//     checkAuthPrecondition(context)
+//     checkCreditPrecondition(context.auth.uid, data.cost)
+//     let prompt;
+//     if (data.chapter === "") {
+//         prompt = `Please summarize ${data.title} by ${data.author}.`; 
+//     } else {
+//         prompt = `Please summarize Chapter ${data.chapter} of ${data.title} by ${data.author}.`; 
+//     }
+//     let specification;
+//     if (data.subject === 'technical') {
+//         specification = ' Can you please give the technical details of the important points.';
+//     } else if (data.subject === 'character') {
+//         specification = ' Can you please give the details of character development.';
+//     } else if (data.subject === 'growth') {
+//         specification = ' Can you please give the main takeaways and action items.';
+//     } else {
+//         specification = ' Can you please give as much detail as possible.';
+//     }
+//     const input = prompt + specification;
+//     const promptLength = data.promptLength;
+//     const temperature = data.temperature;
+//     const configuration = new Configuration({
+//         apiKey: process.env.AI,
+//     });
+//     const openai = new OpenAIApi(configuration);
+//     const aiRes = openai.createChatCompletion({
+//         model: "gpt-3.5-turbo",
+//         messages: [{"role": "system", "content": summarySystemMessage}, 
+//                    {"role": "user", "content": input}], 
+//         temperature: temperature,
+//         max_tokens: promptLength,
+//     }).then((response) => {
+//         return response.data.choices[0].message;
+//     })
+//     return aiRes
+// })
 
 exports.getCodeFromGPT = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
     costPrecondition(data.cost)
@@ -241,9 +241,9 @@ exports.getCodeFromGPT = functions.runWith({ secrets: ["AI"] }).https.onCall((da
     let lastChar = data.prompt[data.prompt.length - 1]
     let fullPrompt;
     if (!(lastChar === '.' || lastChar === "?")) {
-        fullPrompt = data.prompt + "?"
+        fullPrompt = data.prompt + ". Provide code examples."
     } else {
-        fullPrompt = data.prompt
+        fullPrompt = data.prompt + " Provide code examples." 
     } 
     let comments;
     if (data.comments === "None") {
@@ -334,41 +334,41 @@ exports.getCitation = functions.runWith({ secrets: ["AI"] }).https.onCall((data,
     return aiRes
 })
 
-exports.getAnswer = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    costPrecondition(data.cost)
-    checkAuthPrecondition(context)
-    checkCreditPrecondition(context.auth.uid, data.cost)
-    let prompt;
-    if (data.topic === "Book") {
-        prompt = `I am reading ${data.title}. `
-    } else {
-        prompt = `I am reading about ${data.topic}. `
-    }
-    const input = prompt + data.question + data.detail;
-    const creativity = data.temperature;
-    const promptLength = data.promptLength;
-    const configuration = new Configuration({
-        apiKey: process.env.AI,
-    });
-    const openai = new OpenAIApi(configuration);
-    const mod = openai.createModeration({
-        input: input,
-    }).then((response) => {
-        if (response.data.results[0].flagged) {
-            throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
-        }
-    })
-    const aiRes = openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{"role": "system", "content": askSystemMessage}, 
-                   {"role": "user", "content": input}], 
-        temperature: creativity,
-        max_tokens: promptLength,
-    }).then((response) => {
-        return response.data.choices[0].message;
-    })
-    return aiRes
-})
+// exports.getAnswer = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
+//     costPrecondition(data.cost)
+//     checkAuthPrecondition(context)
+//     checkCreditPrecondition(context.auth.uid, data.cost)
+//     let prompt;
+//     if (data.topic === "Book") {
+//         prompt = `I am reading ${data.title}. `
+//     } else {
+//         prompt = `I am reading about ${data.topic}. `
+//     }
+//     const input = prompt + data.question + data.detail;
+//     const creativity = data.temperature;
+//     const promptLength = data.promptLength;
+//     const configuration = new Configuration({
+//         apiKey: process.env.AI,
+//     });
+//     const openai = new OpenAIApi(configuration);
+//     const mod = openai.createModeration({
+//         input: input,
+//     }).then((response) => {
+//         if (response.data.results[0].flagged) {
+//             throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
+//         }
+//     })
+//     const aiRes = openai.createChatCompletion({
+//         model: "gpt-3.5-turbo",
+//         messages: [{"role": "system", "content": askSystemMessage}, 
+//                    {"role": "user", "content": input}], 
+//         temperature: creativity,
+//         max_tokens: promptLength,
+//     }).then((response) => {
+//         return response.data.choices[0].message;
+//     })
+//     return aiRes
+// })
 
 exports.getTLDR = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
     costPrecondition(data.cost)
@@ -416,37 +416,37 @@ exports.getMath = functions.runWith({ secrets: ["AI"] }).https.onCall((data, con
     return aiRes
 })
 
-exports.getWriting = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-    costPrecondition(data.cost)
-    checkAuthPrecondition(context)
-    checkCreditPrecondition(context.auth.uid, data.cost)
-    let userContext;
-    if (data.userContext === "") {
-        userContext = "";
-    } else {
-        userContext = "Here is some contextual information before I ask my question: " + data.userContext + "\n";
-    }
-    const input = userContext + data.prompt
-    const temperature = data.creativity
-    const configuration = new Configuration({
-        apiKey: process.env.AI,
-    });
-    const openai = new OpenAIApi(configuration);
-    const mod = openai.createModeration({
-        input: input,
-    }).then((response) => {
-        if (response.data.results[0].flagged) {
-            throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
-        }
-    })
-    const aiRes = openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{"role": "system", "content": writingSystemMessage}, 
-                   {"role": "user", "content": input}], 
-        temperature: temperature,
-        max_tokens: 2500,           
-    }).then((response) => {
-        return response.data.choices[0].message;
-    })
-    return aiRes
-})
+// exports.getWriting = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
+//     costPrecondition(data.cost)
+//     checkAuthPrecondition(context)
+//     checkCreditPrecondition(context.auth.uid, data.cost)
+//     let userContext;
+//     if (data.userContext === "") {
+//         userContext = "";
+//     } else {
+//         userContext = "Here is some contextual information before I ask my question: " + data.userContext + "\n";
+//     }
+//     const input = userContext + data.prompt
+//     const temperature = data.creativity
+//     const configuration = new Configuration({
+//         apiKey: process.env.AI,
+//     });
+//     const openai = new OpenAIApi(configuration);
+//     const mod = openai.createModeration({
+//         input: input,
+//     }).then((response) => {
+//         if (response.data.results[0].flagged) {
+//             throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
+//         }
+//     })
+//     const aiRes = openai.createChatCompletion({
+//         model: "gpt-3.5-turbo",
+//         messages: [{"role": "system", "content": writingSystemMessage}, 
+//                    {"role": "user", "content": input}], 
+//         temperature: temperature,
+//         max_tokens: 2500,           
+//     }).then((response) => {
+//         return response.data.choices[0].message;
+//     })
+//     return aiRes
+// })

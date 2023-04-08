@@ -73,7 +73,7 @@ export default function Login() {
                 <div className='flex flex-row justify-center items-center'>
                     <h1 className='sm:text-5xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 pr-2'>Save time</h1>
                     <TypeAnimation className='sm:text-5xl text-3xl p-0 m-0 font-extrabold text-transparent sm:leading-relaxed bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600' 
-                        sequence={['reading.', 2000, 'writing.', 2000, 'coding.', 2000, 'debugging.', 2000, 'citing.', 2000]}
+                        sequence={['reading.', 2000, 'coding.', 2000, 'debugging.', 2000, 'citing.', 2000]}
                         repeat={Infinity}/>
                 </div>
             </div>

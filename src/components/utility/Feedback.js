@@ -23,7 +23,7 @@ export default function Feedback({prompt, solution}) {
                         <GrStatusGood className="hover:text-green-400" size={20}/>
                     </button>
                     <button onClick={() => handleFeedback(0)} className="pl-5 flex flex-row justify-center items-center hover:scale-110 duration-200 pt-2 md:pt-0">
-                        <h1 className='font-extrabold text-red-400 pr-2'>Looks wrong</h1>
+                        <h1 className='font-extrabold text-red-400 pr-2'>Looks incorrect</h1>
                         <AiOutlineDislike className="" size={20}/>
                     </button>
                 </div>

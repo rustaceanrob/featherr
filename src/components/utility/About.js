@@ -21,7 +21,7 @@ export default function About({setFeature}) {
                 <h1 className='font-semibold'>
                     <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> is an application built for learning and productivity. 
                     Powered by artificial intelligence, 
-                    this app generates writing drafts, book and text summaries, citations, code, and even solutions to math questions. 
+                    this app generates text summaries, citations, code, and even solutions to math questions. 
                     For students, each feature can supercharge productivity in a unique way, and, for programmers, coding and debugging are made seemless.    
                 </h1>
             </div>
@@ -40,11 +40,6 @@ export default function About({setFeature}) {
 
             </div>
             <div className='border rounded-md bg-white px-5 py-5'>
-                <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Ask")}> Ask</button> provides 
-                    customizable answers to any questions you might have. This feature is the most dynamic, as you can have <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> generate problems for you, explain concepts to you, 
-                    and give you suggestions on how to improve you writing. You can use this feature for anything and everything!
-                </h1>
                 <h1 className='font-semibold pb-4'>
                     <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Cite")}> Cite</button> gives MLA and APA citations
                     for books, articles, and anything else you might enter. As long as the material was created before 2022, <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> citations
@@ -65,16 +60,8 @@ export default function About({setFeature}) {
                     This feature can show you how to solve most problems and provide a reference to theorems and equations. Please check out our full  <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => navigate("/mathguide")}> Math Guide </button> to learn how to get the most out of this feature!
                 </h1>
                 <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Summarize")}> Summarize</button> provides customizable synopses of 
-                    books. You can choose the length and creativity of the response to meet your goals and interests!
-                </h1>
-                <h1 className='font-semibold pb-4'>
-                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("TLDR")}> TLDR</button> stands for Too Long, Didn't Read. Just paste in a big block of text, 
+                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Summarize")}> Summarize</button> does the reading for you. Just paste in a big block of text, 
                     and <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> will summarize the text for you in a style of your choice: either a paragraph or bullet points.
-                </h1>
-                <h1 className='font-semibold'>
-                    <button className='font-extrabold hover:animate-pulse text-blue-600' onClick={() => setFeature("Write")}> Write</button> is a powerful writing tool for jumpstarting your first draft and beating
-                    writer's block. Just describe what you would like written, and <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900'>Featherr</span> takes care of the rest.
                 </h1>
             </div>
             <div className='flex flex-row jusify-center items-center pt-5 pb-5'>

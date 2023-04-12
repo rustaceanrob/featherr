@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react'
-import { SiLatex } from 'react-icons/si'
-import LaTeXExpression from './utility/LaTeXExpression'
-import { useNavigate } from 'react-router-dom'
 
 export default function MathGuide() {
-    let expressions = ['\\frac{2x}{3}', '4 \\geq 3', 'f(x) = e^3x',"\\sin x", '\\alpha + \\beta x', '\\int\\cos (x) dx', '\\mathbb{E} (X) = \\mu', '\\binom{k}{1}', '\\int_{0}^{\\pi}{\\cos (x) dx}', '\\sum_{i=0}^{n}{i^2}']
-    const navigate = useNavigate()
     useEffect(() => {
         window.scrollTo(0, 0);
       }, [])
@@ -69,104 +64,20 @@ export default function MathGuide() {
                         <li className='pt-2 font-semibold'>
                             2. Extremely complex mathematical expressions
                         </li>
-                        {/* <li className='pt-2 font-semibold'>
-                            3. Questions that require exceptional mathematical skill
-                        </li> */}
                     </ul>
                 </div>
-                <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
-                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>How Featherr Understands Math</h1>
+                <div className='flex flex-row jusify-center items-center pt-10 pb-5'>
+                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Using the Editor</h1>
                 </div>
                 <div className='border rounded-md bg-white px-5 py-5 bg-white'>
                     <h1 className='font-semibold'>
-                        The world of math is complex. 
-                        When you think about how many different symbols there are to represent math concepts, you quickly realize how many there are. This is part of what makes math so powerful, but it is hard to represent equations with just your keyboard. 
-                        To ensure you can ask <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Featherr</span> about all different types of math problems in a standarized way, <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Featherr</span> uses a 
-                        math formatting tool called <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span>. When you want to tell <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Featherr</span> about a complex equation you are working
-                        with, <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span> allows you to simply represent that equation in a way the computer can understand.
+                        When you are using the <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Featherr</span> math editor, 
+                        there are some basic instructions to build equations. When you build equations, you have to use only the buttons provided except when adding normal text.
+                        If you do not see the button you need to add on the main screen, open the "Equation Builder."
+                        There are many buttons to help you build equations in the Equation Builder, and some have blank boxes. You may fill in these blank boxes with whatever you need. To move around the editor, 
+                        you can use the tabbing button provided. The editor will show you a box where you are adding to the equation. 
+                        If there is no box shown, everything you add will be added to the end of the equation.
                     </h1>
-                </div>
-                <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
-                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Using LaTeX</h1>
-                </div>
-                <div className='border rounded-md bg-white px-5 py-5 bg-white'>
-                    <h1 className='font-semibold'>
-                        When you need to input a math equation, you have two options for using <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span>. The first option is to use 
-                        in-line <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span>. In-line <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span> lets you 
-                        write normal words and insert a math equation on the same line. To start a <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span> math equation, you can use one $ symbol at the beginning and end of your equation.
-                        The second option is block style <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span>. Block expressions allow you to put an equation on a new line. To start and end a block expression, use $$.
-                    </h1>
-                </div>
-                {/* example */}
-                <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
-                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Example</h1>
-                </div>
-                <div className='flex flex-col pt-2 pb-2'>
-                                        <div className='flex flex-col jusitfy-center items-center border rounded-md bg-white px-10 py-5 bg-white'>
-                                            <div className='flex flex-row justify-center items-center'>
-                                                <h1 className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 pr-2'>Your Input:</h1>
-                                                <h1>$</h1>
-                                                <h1 className='font-bold'>x^2 + e^x + \cos(x)</h1>
-                                                <h1>$</h1>
-                                            </div>
-                                            <div className='flex flex-row justify-center items-center'>
-                                                <LaTeXExpression text={"x^2 + e^x + \\cos(x)"}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
-                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX Quick Start</h1>
-                </div>
-                <div className='border rounded-md bg-white px-5 py-5 bg-white'>
-                    <h1 className='font-semibold'>
-                        Here is a list of how to input a variety of common math expressions and how to input them with <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span>. Please input equations like this when submitting your questions
-                        to  <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Featherr</span>! Feel free to copy any of
-                        these expressions for your question.
-                    </h1>
-                </div>
-                <div className='grid grid-cols-1 gap-2 xl:grid-cols-2 pt-5'>
-                    {
-                        expressions.map((expression) => 
-                            {
-                                return (
-                                    <div className='flex flex-col pt-2 pb-2'>
-                                        <div className='flex flex-col jusitfy-center items-center border rounded-md bg-white px-10 py-5 bg-white'>
-                                            <div className='flex flex-row justify-center items-center'>
-                                                <h1 className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900 pr-2'>Input:</h1>
-                                                <h1>$</h1>
-                                                <h1 className='font-bold'>{expression}</h1>
-                                                <h1>$</h1>
-                                            </div>
-                                            <LaTeXExpression text={expression}/>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                        )
-                    }
-                </div>
-                <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
-                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Can't Find What You Need?</h1>
-                </div>
-                <div className='border rounded-md bg-white px-5 py-5 bg-white'>
-                    <h1 className='font-semibold'>
-                        Check out the <span className='font-extrabold text-blue-600 hover:animate-pulse'><button onClick={() => navigate('/latextable')}>LaTeX Table</button></span>!
-                    </h1>
-                </div>
-                <div className='flex flex-row jusify-center items-center pt-5 pb-5'>
-                    <h1 className='text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Need More LaTeX Help?</h1>
-                </div>
-                <div className='border rounded-md px-5 py-5 bg-white grid grid-cols-1 xl:grid-cols-2 gap-2 justify-center'>
-                    <h1 className='col-span-1 xl:col-span-2 font-semibold'>The best way to figure out how to enter your expression with <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>LaTeX</span> is <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Featherr</span> itself!
-                    You can ask how to write your expression using the <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-900'>Ask</span> feature, but if you would like to save credits you may learn from these resources.
-                    </h1>
-                    <a href="https://www.latex-project.org/help/documentation/" className='flex flex-row justify-center items-center hover:animate-pulse pt-2'>
-                        <h1 className='font-bold pr-2'>Official LaTeX Documentation</h1>
-                        <SiLatex/>
-                    </a>
-                    <a href="https://www.latex-project.org/help/documentation/amsldoc.pdf" className='flex flex-row justify-center items-center hover:animate-pulse pt-2'>
-                        <h1 className='font-bold'>LaTeX Math Guide</h1>
-                    </a>
                 </div>
                 <div className='absolute top-0 left-0 h-screen object-cover w-full bg-gray-100 z-[-100]'>
                 </div>

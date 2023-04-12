@@ -5,7 +5,7 @@ export default function MathButton({prompt, expression, setPrompt}) {
     const handleClick = (event) => {
         event.preventDefault()
         if (prompt.slice(-1) === "$") {
-            setPrompt(prompt.replace(/\$$/, ` ${expression}$`))
+            setPrompt(prompt.replace(/\$$/, `${expression}$`))
         } else {
             setPrompt(prompt + `$${expression}$`)
         }
@@ -13,7 +13,7 @@ export default function MathButton({prompt, expression, setPrompt}) {
 
     return (
         <button className='border px-2 py-2 rounded-md' onClick={(event) => handleClick(event)}>
-            <MathJax>{"$" + expression + "$"}</MathJax>
+            <MathJax>{"$" + expression.trim() + "$"}</MathJax>
         </button>
     )
 }

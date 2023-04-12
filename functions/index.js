@@ -4,18 +4,6 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 // system messages
-const askSystemMessage = "You are an assistant that answers questions for users. " +    
-                         "You follow this set of guidelines when answering user questions: " + 
-                         "- Answer the question in as much detail as required. " + 
-                         "- Answer the question in one response only. " + 
-                         "- Limit all excess prose. " + 
-                         "- Do not respond to derogatory questions."
-
-// const citationSystemMessage = "You are an assistant that provides citations for media content. " + 
-//                               "You follow these citation guidelines: " + 
-//                               "- Provide only the citation with no additional prose. " + 
-//                               "- Do not add an any information to the citation if you are uncertain of its validity. " +
-//                               "- Adhere to the citation type and versioning requested by the user."
 
 const codeSystemMessage = "You are a programming assistant that produces programs for users. " + 
                           "You follow these guidelines when producing the code: " +
@@ -29,12 +17,6 @@ const debugSystemMessage = "You are a programming assistant that helps debug use
                            "- Provide only explanation and debug steps for the error with no additional prose. " +
                            "- If there are multiple ways to debug the error. You provide the simplest one."
 
-const summarySystemMessage = "You are an assistant that provides detailed summaries of books for users. " +    
-                            "You follow this set of guidelines when summarizing books and chapters of books: " + 
-                            "- Provide as much detail of the book or chapter as asked by the user. " + 
-                            "- Summarize the book or chapter in one response only. " + 
-                            "- Limit all additional prose."
-
 const tldrSystemMessage = "You are an assistant that provides detailed summaries of text. " +    
                             "You follow this set of guidelines when summarizing text: " + 
                             "- Provide as much detail of the text as asked by the user. " + 
@@ -44,18 +26,11 @@ const tldrSystemMessage = "You are an assistant that provides detailed summaries
 const mathSystemMessage = "You are a mathematics assistant that provides detailed solutions for problems a user provides. " +
                             "You follow this set of guidelines when solving their problem: " +
                             "- Answer the question in one response only. " +
-                            "- List all the steps required to solve the problem. " + 
-                            "- Quickly remark on any theorems, equations, constants, or facts used to solve the problem. " + 
-                            "- Provide all necessary calculations or proofs required to solve the problem. " + 
-                            "- If the question involves money, say dollars instead of using the dollar symbol. " +
-                            "- Provide the solution in LaTeX format. Use '$' for the inline LaTeX delimiter and '$$' for the block LaTeX delimiter. " + //
+                            "- Show all steps with precise detail. " + 
+                            // "- Quickly remark on any theorems, equations, constants, or facts used to solve the problem. " + 
+                            // "- Provide all necessary calculations or proofs required to solve the problem. " + 
+                            "- Provide the solution in LaTeX format. Use '$' for the inline LaTeX delimiter and '$$' for the block LaTeX delimiter. " + 
                             "- Do not add any additional prose."
-
-const writingSystemMessage = "You are a writing assistant. You follow this set of guidelines when interacting with users: " +
-                            "- Write what was asked of you in as much detail as required. " + 
-                            "- Produce one response only. " + 
-                            "- Limit all excess prose. " + 
-                            "- Do not respond to derogatory requests."
 
 // utility functions, admin/DB 
 const costPrecondition = (cost) => {
@@ -188,46 +163,7 @@ exports.giveFeedback = functions.https.onCall((data, context) => {
     const newDoc = admin.firestore().collection("feedback").doc().set({"prompt": prompt, "solution":solution, "feedback": feedback})
 })
 
-// Open AI calls
-// exports.getChapterByTitleAndAuthor = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-//     costPrecondition(data.cost)
-//     checkAuthPrecondition(context)
-//     checkCreditPrecondition(context.auth.uid, data.cost)
-//     let prompt;
-//     if (data.chapter === "") {
-//         prompt = `Please summarize ${data.title} by ${data.author}.`; 
-//     } else {
-//         prompt = `Please summarize Chapter ${data.chapter} of ${data.title} by ${data.author}.`; 
-//     }
-//     let specification;
-//     if (data.subject === 'technical') {
-//         specification = ' Can you please give the technical details of the important points.';
-//     } else if (data.subject === 'character') {
-//         specification = ' Can you please give the details of character development.';
-//     } else if (data.subject === 'growth') {
-//         specification = ' Can you please give the main takeaways and action items.';
-//     } else {
-//         specification = ' Can you please give as much detail as possible.';
-//     }
-//     const input = prompt + specification;
-//     const promptLength = data.promptLength;
-//     const temperature = data.temperature;
-//     const configuration = new Configuration({
-//         apiKey: process.env.AI,
-//     });
-//     const openai = new OpenAIApi(configuration);
-//     const aiRes = openai.createChatCompletion({
-//         model: "gpt-3.5-turbo",
-//         messages: [{"role": "system", "content": summarySystemMessage}, 
-//                    {"role": "user", "content": input}], 
-//         temperature: temperature,
-//         max_tokens: promptLength,
-//     }).then((response) => {
-//         return response.data.choices[0].message;
-//     })
-//     return aiRes
-// })
-
+//Open AI Calls
 exports.getCodeFromGPT = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
     costPrecondition(data.cost)
     checkAuthPrecondition(context)
@@ -334,42 +270,6 @@ exports.getCitation = functions.runWith({ secrets: ["AI"] }).https.onCall((data,
     return aiRes
 })
 
-// exports.getAnswer = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-//     costPrecondition(data.cost)
-//     checkAuthPrecondition(context)
-//     checkCreditPrecondition(context.auth.uid, data.cost)
-//     let prompt;
-//     if (data.topic === "Book") {
-//         prompt = `I am reading ${data.title}. `
-//     } else {
-//         prompt = `I am reading about ${data.topic}. `
-//     }
-//     const input = prompt + data.question + data.detail;
-//     const creativity = data.temperature;
-//     const promptLength = data.promptLength;
-//     const configuration = new Configuration({
-//         apiKey: process.env.AI,
-//     });
-//     const openai = new OpenAIApi(configuration);
-//     const mod = openai.createModeration({
-//         input: input,
-//     }).then((response) => {
-//         if (response.data.results[0].flagged) {
-//             throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
-//         }
-//     })
-//     const aiRes = openai.createChatCompletion({
-//         model: "gpt-3.5-turbo",
-//         messages: [{"role": "system", "content": askSystemMessage}, 
-//                    {"role": "user", "content": input}], 
-//         temperature: creativity,
-//         max_tokens: promptLength,
-//     }).then((response) => {
-//         return response.data.choices[0].message;
-//     })
-//     return aiRes
-// })
-
 exports.getTLDR = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
     costPrecondition(data.cost)
     checkAuthPrecondition(context)
@@ -399,7 +299,15 @@ exports.getMath = functions.runWith({ secrets: ["AI"] }).https.onCall((data, con
     costPrecondition(data.cost)
     checkAuthPrecondition(context)
     checkCreditPrecondition(context.auth.uid, data.cost)
-    const input = data.prompt
+    let lastChar = data.prompt[data.prompt.length - 1]
+    let fullPrompt
+    if (!(lastChar === '.' || lastChar === "?")) {
+        fullPrompt = data.prompt + "."
+    } else {
+        fullPrompt = data.prompt
+    }
+    const input = fullPrompt
+    functions.logger.log(input)
     const configuration = new Configuration({
         apiKey: process.env.AI,
     });
@@ -408,45 +316,11 @@ exports.getMath = functions.runWith({ secrets: ["AI"] }).https.onCall((data, con
         model: "gpt-3.5-turbo",
         messages: [{"role": "system", "content": mathSystemMessage}, 
                    {"role": "user", "content": "List the steps to solve the following."},
+                   {"role": "user", "content": "Provide a solution when possible."},
                    {"role": "user", "content": input}], 
-        temperature: 0.0005           
+        temperature: 0 //0.0005          
     }).then((response) => {
         return response.data.choices[0].message;
     })
     return aiRes
 })
-
-// exports.getWriting = functions.runWith({ secrets: ["AI"] }).https.onCall((data, context) => {
-//     costPrecondition(data.cost)
-//     checkAuthPrecondition(context)
-//     checkCreditPrecondition(context.auth.uid, data.cost)
-//     let userContext;
-//     if (data.userContext === "") {
-//         userContext = "";
-//     } else {
-//         userContext = "Here is some contextual information before I ask my question: " + data.userContext + "\n";
-//     }
-//     const input = userContext + data.prompt
-//     const temperature = data.creativity
-//     const configuration = new Configuration({
-//         apiKey: process.env.AI,
-//     });
-//     const openai = new OpenAIApi(configuration);
-//     const mod = openai.createModeration({
-//         input: input,
-//     }).then((response) => {
-//         if (response.data.results[0].flagged) {
-//             throw new functions.https.HttpsError('failed-precondition', 'Moderation flag');
-//         }
-//     })
-//     const aiRes = openai.createChatCompletion({
-//         model: "gpt-3.5-turbo",
-//         messages: [{"role": "system", "content": writingSystemMessage}, 
-//                    {"role": "user", "content": input}], 
-//         temperature: temperature,
-//         max_tokens: 2500,           
-//     }).then((response) => {
-//         return response.data.choices[0].message;
-//     })
-//     return aiRes
-// })

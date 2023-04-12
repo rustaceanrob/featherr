@@ -13,7 +13,7 @@ export default function CodeButton({language, setLanguage}) {
 
     return (
         <button onClick={(event) => handleClickEvent(event)}className='flex flex-row justify-center items-center border px-2 py-2 rounded-md w-full bg-white hover:animate-pulse'>
-            <h1 className='font-semibold pr-1 sm:pr-2 lg:pr-4'>{language}</h1>
+            <h1 className='font-semibold pr-1 sm:pr-2'>{language}</h1>
             {
                 {
                     "Python": <FaPython className='text-gray-700'/>,

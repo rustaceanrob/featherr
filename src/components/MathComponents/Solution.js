@@ -8,7 +8,7 @@ export default function Solution({prompt, solution, setSolutionLoading}) {
         setSolutionLoading(false)
     }, [solution, setSolutionLoading])
     return (
-        <div className='pt-5 w-full hover:cursor grid grid-cols-1 gap-5 pb-10'>
+        <div className='w-full hover:cursor grid grid-cols-1 gap-5 pb-10'>
             <div className='flex flex-col justify-center items-center border px-5 py-5 pt-5 rounded-lg bg-gradient-to-r from-amber-400/40 to-orange-400/40'>
                 <div className='flex flex-row justify-center items-center'>
                     <AiOutlineWarning size={25}/>

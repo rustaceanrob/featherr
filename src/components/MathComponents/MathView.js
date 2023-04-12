@@ -8,9 +8,9 @@ export default function MathView({tier, credits, setUserCredits}) {
     const [prompt, setPrompt] = useState(``)
     const [solution, setSolution] = useState()
     const [solutionLoading, setSolutionLoading] = useState(false)
-    const handleOpen = (page) => {
-        window.open('/' + page, '_blank');
-    }
+    // const handleOpen = (page) => {
+    //     window.open('/' + page, '_blank');
+    // }
     const mjaxConfig = {
       loader: { load: ["[tex]/html"] },
       tex: {
@@ -28,7 +28,7 @@ export default function MathView({tier, credits, setUserCredits}) {
 
     return (
       <MathJaxContext version={3} config={mjaxConfig}>
-      <div className='flex flex-col lg:pl-60 lg:pr-60 md:pl-20 md:pr-20 sm:pl-20 sm:pr-20 pl-5 pr-5 pt-5'>
+      <div className='flex flex-col lg:pl-40 lg:pr-40 md:pl-20 md:pr-20 sm:pl-20 sm:pr-20 pl-5 pr-5 pt-5'>
         <MathInput tier={tier} solution={solution} prompt={prompt} setPrompt={setPrompt} credits={credits} setUserCredits={setUserCredits} setSolution={setSolution} setSolutionLoading={setSolutionLoading}/>
         { solution ? (
           <div>
@@ -39,13 +39,6 @@ export default function MathView({tier, credits, setUserCredits}) {
           </div>
           ) : (
           <>
-            <div className='pt-5 justify-center items-center' >
-              <div className='flex flex-row justify-center items-center border px-5 py-5 rounded-lg bg-white'>
-                <h1 className='font-extrabold pr-2 text-sm'>Not sure where to start? Check out the <span className='font-extrabold hover:animate-pulse text-blue-600'><button onClick={() => handleOpen("mathguide")}>Math Guide</button></span>. 
-                Looking for a LaTeX command? Check out the <span className='font-extrabold hover:animate-pulse text-blue-600'><button onClick={() => handleOpen("latextable")}>LaTeX Table</button></span>. </h1>
-                <span className='font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-amber-900'></span>
-              </div>
-            </div>
             <div className='pt-10 hover:cursor'>
                 <div className='bg-white border rounded-md w-full h-full'>
                     <p className='text-gray-400 px-5 py-5'>Your solution will appear here</p>
